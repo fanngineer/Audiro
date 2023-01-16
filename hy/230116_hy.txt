@@ -1,0 +1,28 @@
+<PyQt + Qt designer 설치> - raspberry pi는 pyside2 까지만 지원해서 (최신버전은 6) PyQt5로 결정함(설치완료, 최신버전 5)
+  //PyQt 설치
+sudo apt-get install python3-pyqt5 
+sudo apt-get install qt5-default pyqt5-dev pyqt5-dev-tools
+
+  //Qt Designer 설치
+sudo apt-get install qttools5-dev-tools
+
+<한글팩 설치>
+sudo apt update	// apt 최신화
+sudo apt upgrade
+
+sudo apt install -y fonts-unfonts-core // 폰트설치
+sudo apt install ibus-hangul // 한글입력기 설치
+Locale 설정: en-US-UTF-8 // 변경 하지말것
+
+<멀티레이아웃> 
+QStackedWidget
+
+<뮤직플레이어 - 코드 >
+https://www.clien.net/service/board/pds/16521086
+
+<유투브 노래재생 , mps-youtube> -진행중
+pip3 install mps-youtube
+pip3 install youtube-dl
+<주기적 업데이트>
+pip3 install mps-youtube --upgrade
+pip3 install youtube-dl--upgrade
