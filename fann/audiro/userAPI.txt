@@ -1,0 +1,17 @@
+//로그인 버튼 최초 클릭 시 요청
+URL : /accounts/auth/Google
+login_request
+- 로그인 페이지로 리다이렉트
+
+>> 로그인 창에 아이디/ 비번 입력
+
+//로그인 페이지에서 로그인 후 승인된 URI로 리다이렉트
+URL : /accounts/auth/Google/callback
+- access token과 refresh token
+
+- access token을 통해서 인가처리를 하며 소셜 서버에 사용자의 정보를 요청할 수 있음.
+
+//개인페이지의 프로필 사진 수정
+URL : 
+//개인페이지의 상태메세지 수정
+
