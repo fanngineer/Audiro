@@ -3,6 +3,7 @@ package com.a402.audiro.service;
 import com.a402.audiro.repository.MusicmateRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +25,6 @@ public class MusicmateServiceImpl implements MusicmateService{
             log.error(e.getMessage());
             throw e;
         }
-
         return musicmates;
     }
 

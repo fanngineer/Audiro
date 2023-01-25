@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/audiro.main.iml" filepath="$PROJECT_DIR$/.idea/modules/audiro.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/audiro.test.iml" filepath="$PROJECT_DIR$/.idea/modules/audiro.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.a402.audiro.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.a402.audiro.main.iml" />
     </modules>
   </component>
