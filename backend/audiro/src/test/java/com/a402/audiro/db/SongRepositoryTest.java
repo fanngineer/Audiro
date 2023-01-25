@@ -1,7 +1,5 @@
 package com.a402.audiro.db;
 
-import com.a402.audiro.entity.Song;
-import com.a402.audiro.repository.SongRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

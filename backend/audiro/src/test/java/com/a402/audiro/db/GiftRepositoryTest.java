@@ -1,9 +1,6 @@
 package com.a402.audiro.db;
 
 import com.a402.audiro.entity.*;
-import com.a402.audiro.repository.GiftRepository;
-import com.a402.audiro.repository.SongRepository;
-import com.a402.audiro.repository.SpotRepository;
 import com.a402.audiro.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
