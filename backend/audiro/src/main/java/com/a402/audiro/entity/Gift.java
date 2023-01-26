@@ -40,15 +40,24 @@ public class Gift {
 
     private LocalDateTime regTime;
 
-    @Embedded
-    private GiftFeedback giftFeedback;
+    @Column(name = "gift_feedback1")
+    private int feed1;
+
+    @Column(name = "gift_feedback2")
+    private int feed2;
+
+    @Column(name = "gift_feedback3")
+    private int feed3;
+
+    @Column(name = "gift_feedback4")
+    private int feed4;
 
     private boolean isManito;
 
     @Override
     public String toString() {
         return "Gift{" +
-                "giftId=" + id +
+                "id=" + id +
                 ", user=" + user +
                 ", spot=" + spot +
                 ", song=" + song +
@@ -56,7 +65,10 @@ public class Gift {
                 ", isOpen=" + isOpen +
                 ", giftTag=" + giftTag +
                 ", regTime=" + regTime +
-                ", giftFeedback=" + giftFeedback +
+                ", feed1=" + feed1 +
+                ", feed2=" + feed2 +
+                ", feed3=" + feed3 +
+                ", feed4=" + feed4 +
                 ", isManito=" + isManito +
                 '}';
     }
@@ -103,19 +115,43 @@ public class Gift {
         return regTime;
     }
 
-    public GiftFeedback getGiftFeedback() {
-        return giftFeedback;
-    }
-
-    public void setGiftFeedback(GiftFeedback giftFeedback) {
-        this.giftFeedback = giftFeedback;
-    }
-
     public boolean isManito() {
         return isManito;
     }
 
     public void setManito(boolean manito) {
         isManito = manito;
+    }
+
+    public int getFeed1() {
+        return feed1;
+    }
+
+    public void setFeed1(int feed1) {
+        this.feed1 = feed1;
+    }
+
+    public int getFeed2() {
+        return feed2;
+    }
+
+    public void setFeed2(int feed2) {
+        this.feed2 = feed2;
+    }
+
+    public int getFeed3() {
+        return feed3;
+    }
+
+    public void setFeed3(int feed3) {
+        this.feed3 = feed3;
+    }
+
+    public int getFeed4() {
+        return feed4;
+    }
+
+    public void setFeed4(int feed4) {
+        this.feed4 = feed4;
     }
 }

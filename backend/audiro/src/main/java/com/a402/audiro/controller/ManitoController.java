@@ -1,8 +1,7 @@
 package com.a402.audiro.controller;
 
-import com.a402.audiro.dto.GiftDTO;
+import com.a402.audiro.dto.GiftThumbnailDTO;
 import com.a402.audiro.dto.ManitoDTO;
-import com.a402.audiro.service.GiftService;
 import com.a402.audiro.service.ManitoService;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +22,7 @@ public class ManitoController {
     @GetMapping
     public ResponseEntity<?> getManitoList(){
         try{
-            List<GiftDTO> manitoList = manitoService.getManitoList();
+            List<GiftThumbnailDTO> manitoList = manitoService.getManitoList();
             return ResponseEntity.ok().body(manitoList);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

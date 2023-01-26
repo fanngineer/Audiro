@@ -1,6 +1,7 @@
 package com.a402.audiro.controller;
 
 import com.a402.audiro.dto.GiftDTO;
+import com.a402.audiro.dto.GiftThumbnailDTO;
 import com.a402.audiro.service.GiftService;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class GiftController {
     @GetMapping
     public ResponseEntity<?> getGiftList(@RequestParam String nickname){
         try{
-            List<GiftDTO> giftDTOList = giftService.getGiftList(nickname);
+            List<GiftThumbnailDTO> giftDTOList = giftService.getGiftList(nickname);
             return ResponseEntity.ok().body(giftDTOList);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

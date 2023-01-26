@@ -1,12 +1,13 @@
 package com.a402.audiro.service;
 
-import com.a402.audiro.dto.GiftDTO;
+import com.a402.audiro.dto.GiftThumbnailDTO;
 import com.a402.audiro.dto.ManitoDTO;
 import com.a402.audiro.entity.*;
 import com.a402.audiro.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,14 +25,14 @@ public class ManitoServiceImpl implements ManitoService{
     private final SongMetaRepository songMetaRepository;
 
     @Override
-    public List<GiftDTO> getManitoList() {
+    public List<GiftThumbnailDTO> getManitoList() {
         List<Gift> manito;
-        List<GiftDTO> manitoList;
+        List<GiftThumbnailDTO> manitoList;
 
         try{
             manito = giftRepository.findManitos();
             manitoList = manito.stream()
-                    .map(m -> GiftDTO.builder()
+                    .map(m -> GiftThumbnailDTO.builder()
                             .id(m.getId())
                             .giftImg(m.getGiftImg())
                             .build())
@@ -44,6 +45,7 @@ public class ManitoServiceImpl implements ManitoService{
         return manitoList;
     }
 
+    @Transactional
     @Override
     public void addManito(ManitoDTO manitoDTO) {
         try{

@@ -57,9 +57,9 @@ public class GiftRepositoryTest {
     @DisplayName("GiftFeedback 확인")
     void giftFeedbackCheck(){
         Gift gift = giftRepository.findById(1);
-        Assertions.assertThat(gift.getGiftFeedback().getFeed1()).isEqualTo(0);
+        Assertions.assertThat(gift.getFeed1()).isEqualTo(0);
 
-        gift.getGiftFeedback().setFeed1(1);
+        gift.setFeed1(1);
         giftRepository.save(gift);
     }
 
