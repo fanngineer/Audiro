@@ -154,4 +154,20 @@ public class Gift {
     public void setFeed4(int feed4) {
         this.feed4 = feed4;
     }
+
+    public void plusFeed1() {
+        this.feed1++;
+    }
+
+    public void plusFeed2() {
+        this.feed2++;
+    }
+
+    public void plusFeed3() {
+        this.feed3++;
+    }
+
+    public void plusFeed4() {
+        this.feed4++;
+    }
 }

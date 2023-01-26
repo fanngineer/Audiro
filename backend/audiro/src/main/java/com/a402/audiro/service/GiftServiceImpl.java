@@ -5,6 +5,7 @@ import com.a402.audiro.dto.GiftEmojiDTO;
 import com.a402.audiro.dto.GiftThumbnailDTO;
 import com.a402.audiro.entity.Gift;
 import com.a402.audiro.repository.GiftRepository;
+import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -71,6 +72,32 @@ public class GiftServiceImpl implements GiftService{
     public void deleteGift(long giftId) {
         try{
             giftRepository.deleteById(giftId);
+        }catch(Exception e){
+            log.error(e.getMessage());
+            throw e;
+        }
+    }
+
+    @Transactional
+    @Override
+    public void updateFeedback(long giftId, int feedbackNum) {
+        try{
+            Gift gift = giftRepository.findById(giftId);
+            switch (feedbackNum){
+                case 1:
+                    gift.plusFeed1();
+                    break;
+                case 2:
+                    gift.plusFeed2();
+                    break;
+                case 3:
+                    gift.plusFeed3();
+                    break;
+                case 4:
+                    gift.plusFeed4();
+                    break;
+            }
+            giftRepository.save(gift);
         }catch(Exception e){
             log.error(e.getMessage());
             throw e;

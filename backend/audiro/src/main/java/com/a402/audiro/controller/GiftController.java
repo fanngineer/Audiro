@@ -40,6 +40,16 @@ public class GiftController {
         }
     }
 
+    @GetMapping("/feedback")
+    public ResponseEntity updateGiftFeedback(@RequestParam long giftId, @RequestParam int feedbackNum){
+        try{
+            giftService.updateFeedback(giftId, feedbackNum);
+            return ResponseEntity.ok().body("Gift Feedback is updated");
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @DeleteMapping
     public ResponseEntity<?> deleteGift(@RequestParam long giftId){
         try{
