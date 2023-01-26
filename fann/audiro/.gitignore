@@ -35,6 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-### 로그인 클라이언트 정보 ###
-# application-oauth.properties

@@ -1,5 +1,6 @@
 package com.a402.audiro.entity;
 
+import javax.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -19,8 +20,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     private String token;
     private String nickname;
+    private String role; //ROLE_USER, ROLE_ADMIN >> 추후 구현을 위해 생성
+    private String email;
 
     @Column(name = "profile_message")
     private String msg;
@@ -30,7 +42,7 @@ public class User {
 
     @Override
     public String toString(){
-        return String.format("User[id=%d, name='%s', token='%s', nickname='%s']", id, name, token, nickname);
+        return String.format("User[id=%d, name='%s', token='%s', nickname='%s', email='%s']", id, name, token, nickname, email);
     }
 
     public long getUserId() {
@@ -65,7 +77,11 @@ public class User {
         this.msg = msg;
     }
 
-    public void setImg(String img) {
-        this.img = img;
-    }
+    public void setImg(String img) { this.img = img; }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getRole(){ return role; }
+
+    public void setRole(String role){ this.role = role; }
 }

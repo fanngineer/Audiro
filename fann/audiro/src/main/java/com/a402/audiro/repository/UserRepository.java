@@ -9,7 +9,7 @@ public interface UserRepository extends Repository<User, Long> {
     User findById(long id);
     User findByNickname(String nickname);
     User findByToken(String token);
-
+    User findByEmail(String email);
     @Transactional
     void save(User user);
     void delete(User user);
