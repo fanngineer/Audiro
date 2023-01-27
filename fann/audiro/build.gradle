@@ -23,23 +23,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	testCompileOnly 'org.projectlombok:lombok'
-	testAnnotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	runtimeOnly 'mysql:mysql-connector-java'
 
 
-	// 로그인
-	// - OAuth
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-	// - Security
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
-	testImplementation group: 'org.springframework.security', name: 'spring-security-test'
-	// - Devtools
-	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools'
-	// - Mustache : 테스트를 위한 빌드 (추후 삭제)
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	compileOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'mysql:mysql-connector-java'
+	testImplementation 'org.springframework.security:spring-security-test'
+	//For test
 	implementation 'org.springframework.boot:spring-boot-starter-mustache'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
 }
 
 tasks.named('test') {
