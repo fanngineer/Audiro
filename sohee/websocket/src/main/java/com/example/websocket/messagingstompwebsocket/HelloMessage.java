@@ -3,11 +3,14 @@ package com.example.websocket.messagingstompwebsocket;
 public class HelloMessage {
 
     private String name;
+    private String message;
 
     public HelloMessage(){}
 
-    public HelloMessage(String name){
+    public HelloMessage(String name, String message){
+
         this.name = name;
+        this.message = message;
     }
 
     public String getName(){
@@ -18,4 +21,11 @@ public class HelloMessage {
         this.name = name;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }
