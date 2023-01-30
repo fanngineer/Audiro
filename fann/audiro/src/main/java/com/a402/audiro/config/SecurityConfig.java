@@ -3,6 +3,8 @@
  * */
 package com.a402.audiro.config;
 
+import com.a402.audiro.config.oauth.PrincipalOauth2UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -16,10 +18,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) // 특정 주소 접근시 권한 및 인증을 위한 어노테이션(secured, pre~~) 활성화
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
-    @Bean
-    public BCryptPasswordEncoder encodePwd(){
-        return new BCryptPasswordEncoder();
-    }
+
+
+//    @Bean
+//    public BCryptPasswordEncoder encodePwd(){
+//        return new BCryptPasswordEncoder();
+//    }
+
+    @Autowired
+    private PrincipalOauth2UserService principalOauth2UserService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -35,9 +42,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .formLogin() //다른 페이지로 갈때 로그인주소로 이동
                 .loginPage("/loginForm")
                 .usernameParameter("email") //식별을 위해 username을 entity에서 email으로 사용하므로 변경
-                .passwordParameter("name") //비밀번호 대신에 name을 사용
                 .loginProcessingUrl("/loginProc") // </login> 호출 시 security가 로그인 진행해줌
-                .defaultSuccessUrl("/");    //로그인 성공 시 메인페이지
+                .defaultSuccessUrl("/")//로그인 성공 시 메인페이지
+                .and()
+                .oauth2Login()//OAuth2 로그인 방식을 사용
+                .loginPage("/loginForm") //Oauth로그인 페이지 설정
+                .userInfoEndpoint() //로그인된 사용자 정보
+                .userService(principalOauth2UserService); //로그인 후처리
     }
 }
 
