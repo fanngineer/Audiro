@@ -8,26 +8,39 @@ package com.a402.audiro.config.auth;
 import com.a402.audiro.entity.User;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
-public class PrincipalDetails implements UserDetails{
+@Data
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private User user;
+    private Map<String,Object> attributes;
+
 
     public PrincipalDetails(User user) {
-        super();
         this.user = user;
+    }
+
+    //OAuth로그인을 위한 생성자
+    public PrincipalDetails(User user, Map<String, Object> attributes) {
+        this.user = user;
+        this.attributes = attributes;
     }
 
     @Override
     public String getPassword(){
-        return null;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getName();
+        return user.getEmail();
     }
 
     //만료 여부
@@ -54,11 +67,21 @@ public class PrincipalDetails implements UserDetails{
     }
 
 
+    @Override
+    public Map<String, Object> getAttributes() {
+        return null;
+    }
+
     //user의 권한을 리턴
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collet = new ArrayList<>();
         collet.add(()->{ return user.getRole();});
         return collet;
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 }
