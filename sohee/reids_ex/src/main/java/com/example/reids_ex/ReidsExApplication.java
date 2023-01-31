@@ -40,7 +40,7 @@ public class ReidsExApplication{
 		Receiver receiver = ctx.getBean(Receiver.class);
 
 		while(receiver.getCount() == 0){
-			log.info("Sending message...");
+			log.warn("Sending message...");
 			template.convertAndSend("chat", "Hello from Redis!");
 			Thread.sleep(500L);
 		}
