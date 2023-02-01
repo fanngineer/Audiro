@@ -1,0 +1,26 @@
+- get요청 <google로 로그인하기>
+oauth2/authorization/google?redirect_uri=@@@
+>> 리다이렉터 uri
+https://kauth.kakao.com/oauth/authorize
+?client_id=  
+    ${kakao.clientID}    //1
+	  &redirect_uri=${kakao에 등록한 redirectUri} // 2
+	  &response_type=code //3
+
+- 백엔드는 authorizaition code를 받아 토큰 요청해서 access token 받음
+- 이걸로 resource server에 회원 정보 요청
+- 회원 정보를 받아 JWT 생성
+- 해당 정보로 db조회 후 조회안되면 최초 로그인
+- 해당 토큰 요청을 포함해 프론트 엔드로 리다이렉트
+
+
+
+getUserInfo
+
+logout
+
+login
+
+changeImg
+
+changeNickname
