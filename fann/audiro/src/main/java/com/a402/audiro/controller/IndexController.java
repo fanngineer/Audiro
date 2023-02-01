@@ -4,20 +4,17 @@
 
 package com.a402.audiro.controller;
 
-import com.a402.audiro.config.auth.CustomBCryptPasswordEncoder;
+import com.a402.audiro.config.util.CustomBCryptPasswordEncoder;
 import com.a402.audiro.config.auth.PrincipalDetails;
-import com.a402.audiro.entity.User;
 import com.a402.audiro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -42,8 +39,8 @@ public class IndexController {
     }
 
     @GetMapping("/user")
-    public @ResponseBody String user(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-        System.out.println("principalDetails :" + principalDetails.getUser());
+    public @ResponseBody String user(@AuthenticationPrincipal OAuth2User oAuth2User) {
+        System.out.println("principalDetails :" + oAuth2User.getAttributes());
         return "user";
     }
 
@@ -52,15 +49,15 @@ public class IndexController {
         return "admin";
     }
 
-    @GetMapping("/manager")
+    @GetMapping("/common")
     public @ResponseBody String manager() {
-        return "manager";
+        return "모두가 볼 수 있는 페이지";
     }
 
-//    @GetMapping("/loginForm")
-//    public String login() {
-//        return "loginForm";
-//    }
+    @GetMapping("/loginForm")
+    public String login() {
+        return "loginForm";
+    }
 
 
 //    @GetMapping("/joinForm")
@@ -86,7 +83,6 @@ public class IndexController {
         return "개인정보";
     }
 
-    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')") //메소드 실행 직전에 실행
-    @GetMapping("/data")
-    public @ResponseBody String data(){ return "개인정보"; }
+//    @GetMapping("/data")
+//    public @ResponseBody String data(){ return "로그인해야 보이는 페이지"; }
 }

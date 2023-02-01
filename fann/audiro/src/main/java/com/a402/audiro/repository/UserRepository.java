@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface UserRepository extends Repository<User, Long> {
 
-    User findById(long id);
+    User findById(String id);
     User findByNickname(String nickname);
     User findByToken(String token);
     User findByEmail(String email);

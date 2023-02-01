@@ -17,12 +17,8 @@ public class User {
 
     @Id
     @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private String id;
     private String name;
-
-
-
     private String token;
     private String nickname;
     private String role; //ROLE_USER, ROLE_ADMIN >> 추후 구현을 위해 생성
@@ -42,7 +38,7 @@ public class User {
 
     public String getEmail() { return email; }
 
-    public long getUserId() {
+    public String getUserId() {
         return id;
     }
 
