@@ -57,28 +57,28 @@ public class IndexController {
         return "manager";
     }
 
-    @GetMapping("/loginForm")
-    public String login() {
-        return "loginForm";
-    }
+//    @GetMapping("/loginForm")
+//    public String login() {
+//        return "loginForm";
+//    }
 
 
-    @GetMapping("/joinForm")
-    public String join() {
-        return "joinForm";
-    }
+//    @GetMapping("/joinForm")
+//    public String join() {
+//        return "joinForm";
+//    }
 
-    @PostMapping("/join")
-    public String join(User user) {
-        System.out.println(user);
-        user.setRole("ROLE_USER");
-        //비밀번호 인코딩해서 넣어줘야됨
-        String rawPassword = "common-password";
-        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-        user.setPassword(encPassword);
-        userRepository.save(user);
-        return "redirect:/loginForm";
-    }
+//    @PostMapping("/join")
+//    public String join(User user) {
+//        System.out.println(user);
+//        user.setRole("ROLE_USER");
+//        //비밀번호 인코딩해서 넣어줘야됨
+//        String rawPassword = "common-password";
+//        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+//        user.setPassword(encPassword);
+//        userRepository.save(user);
+//        return "redirect:/loginForm";
+//    }
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/info")

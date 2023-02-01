@@ -1,3 +1,6 @@
+/*
+* 접근자 정보 객체
+* */
 package com.a402.audiro.config.auth;
 
 // 로그인 요청 시 security가 로그인을 진행
