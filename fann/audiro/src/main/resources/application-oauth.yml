@@ -11,13 +11,14 @@ spring:
               - profile
 
           naver:
-            client-secret: not-yet
-            client-id: not-yet
+            client-secret: JJBfQDo08A
+            client-id: xj6iYQrdmJ4LT_8N0kGu
             scope:
               - name
               - email
+              - profile_image
             client-name: Naver
-            authorization-grant-type: authorization-code
+            authorization-grant-type: authorization_code
             redirect-uri: http://localhost:8080/login/oauth2/code/naver
           kakao:
             client-secret: <your secret>

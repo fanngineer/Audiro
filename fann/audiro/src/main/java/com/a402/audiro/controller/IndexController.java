@@ -5,7 +5,6 @@
 package com.a402.audiro.controller;
 
 import com.a402.audiro.config.util.CustomBCryptPasswordEncoder;
-import com.a402.audiro.config.auth.PrincipalDetails;
 import com.a402.audiro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -40,7 +39,6 @@ public class IndexController {
 
     @GetMapping("/user")
     public @ResponseBody String user(@AuthenticationPrincipal OAuth2User oAuth2User) {
-        System.out.println("principalDetails :" + oAuth2User.getAttributes());
         return "user";
     }
 
@@ -83,6 +81,10 @@ public class IndexController {
         return "개인정보";
     }
 
+    @GetMapping("/afterLogin")
+    public @ResponseBody String afterLogin(){
+        return "로그인 완료";
+    }
 //    @GetMapping("/data")
 //    public @ResponseBody String data(){ return "로그인해야 보이는 페이지"; }
 }

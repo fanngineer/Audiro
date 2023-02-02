@@ -7,6 +7,7 @@ import com.a402.audiro.config.oauth.OAuth2Service;
 import com.a402.audiro.config.oauth.OAuth2SuccessHandler;
 import com.a402.audiro.config.util.jwt.JwtFilter;
 import com.a402.audiro.config.util.jwt.JwtTokenService;
+import com.a402.audiro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -27,13 +28,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     private OAuth2SuccessHandler oAuth2SuccessHandler;
     @Autowired
     private JwtTokenService jwtTokenService;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
-        http.httpBasic().disable();
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//토큰 기반 인증을 위해 세션 생성x
+        http.httpBasic().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//토큰 기반 인증을 위해 세션 생성x
 //                .and()
 //                .authorizeRequests()
         http.authorizeRequests()
@@ -57,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .successHandler(oAuth2SuccessHandler); //로그인 성공 시에 리디렉션 및 DB에 저장
 
         //jwt 토큰 필터 추가
-        http.addFilterBefore(new JwtFilter(jwtTokenService), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtFilter(jwtTokenService, userRepository), UsernamePasswordAuthenticationFilter.class);
     }
 }
 

@@ -68,7 +68,7 @@ public class OAuth2Attribute {
                 .name((String) response.get("name"))
                 .email((String) response.get("email"))
                 .picture((String) response.get("profile_image"))
-                .idOnly("Google" + (String) attributes.get("id"))
+                .idOnly("Naver" + (String) attributes.get("id"))
                 .attributes(response)
                 .attributeKey(attributeKey)
                 .build();

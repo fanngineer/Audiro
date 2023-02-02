@@ -22,13 +22,13 @@ public class JwtTokenService {
     }//Base64로 인코딩
 
     //토큰 생성 메서드
-    public JwtTokens generateToken(String userId, String role) {
+    public JwtTokens generateToken(String userId, String nickName,String role) {
         long tokenPeriod = 1000L * 60L * 10L; //인증토큰의 만료시간 10분
         long refreshPeriod = 1000L * 60L * 60L * 24L * 30L * 3L; //Refresh토큰 만료 3주
 
         Claims claims = Jwts.claims().setSubject(userId);
         claims.put("role", role);
-
+        claims.put("nickName",nickName);
         Date now = new Date();
         return new JwtTokens(
                 Jwts.builder()
@@ -53,7 +53,7 @@ public class JwtTokenService {
                     .parseClaimsJws(token);
             return claims.getBody()
                     .getExpiration()
-                    .after(new Date());
+                    .after(new Date()); //시간 검증 메서드
         } catch (Exception e) {
             return false;
         }
@@ -61,5 +61,13 @@ public class JwtTokenService {
 
     public String getUserId(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-    } //jwt토큰에서 user정보를 빼오는 메서드
+    } //jwt토큰에서 userId 빼오는 메서드
+
+    public String getUserNickName(String token) {
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("nickName").toString();
+    } //jwt토큰에서 userNickname 빼오는 메서드
+
+    public String getUserRole(String token) {
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("role").toString();
+    } //jwt토큰에서 role 빼오는 메서드
 }
