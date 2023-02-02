@@ -1,11 +1,13 @@
 package com.a402.audiro.service;
 
 import com.a402.audiro.dto.UserInfoDTO;
+import com.a402.audiro.dto.UserLoginDTO;
 import com.a402.audiro.entity.User;
 import com.a402.audiro.repository.UserRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,7 +41,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public void updateUserNickName(String newNickName) {
         try {
-
+            //지금 로그인된 유저
+            UserLoginDTO loginUser = (UserLoginDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String loginUserId = loginUser.getId();
+            
         }
         catch (Exception e){
             log.error(e.getMessage());

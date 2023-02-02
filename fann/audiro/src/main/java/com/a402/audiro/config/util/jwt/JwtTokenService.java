@@ -23,7 +23,7 @@ public class JwtTokenService {
 
     //토큰 생성 메서드
     public JwtTokens generateToken(String userId, String nickName,String role) {
-        long tokenPeriod = 1000L * 60L * 10L; //인증토큰의 만료시간 10분
+        long tokenPeriod = 1000L * 60L * 100L; //인증토큰의 만료시간 100분
         long refreshPeriod = 1000L * 60L * 60L * 24L * 30L * 3L; //Refresh토큰 만료 3주
 
         Claims claims = Jwts.claims().setSubject(userId);
@@ -48,6 +48,7 @@ public class JwtTokenService {
     //토큰 유효성 검증 메서드
     public boolean verifyToken(String token) {
         try {
+            log.info("토큰 검증 시작");
             Jws<Claims> claims = Jwts.parser()
                     .setSigningKey(secretKey)
                     .parseClaimsJws(token);

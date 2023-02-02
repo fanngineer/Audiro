@@ -34,6 +34,7 @@ public class UserController {
     public ResponseEntity<String> changeUserNickName(String newNickName){
         try{
             userService.updateUserNickName(newNickName);
+            //responseHeader에 새로운 토큰을 날려보내야함.
             return ResponseEntity.ok().body(SUCCESS);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

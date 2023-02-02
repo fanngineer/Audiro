@@ -4,6 +4,7 @@ import com.a402.audiro.dto.UserLoginDTO;
 import com.a402.audiro.entity.User;
 import com.a402.audiro.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
 
+@Slf4j
 @RequiredArgsConstructor
 public class JwtFilter extends GenericFilterBean {
     private final JwtTokenService jwtTokenService;
@@ -27,10 +29,10 @@ public class JwtFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String accessToken = ((HttpServletRequest)request).getHeader("Auth");
-
-        System.out.println(accessToken);
+        log.info("AccessToken from request header : " + accessToken);
         //요청을 받으면 들어온 토큰에 대해서 유효성 검증!!
         if (accessToken != null && jwtTokenService.verifyToken(accessToken)) {
+            log.info("유효한 토큰입니다.");
             //토큰에서 지금 접속한 사용자 정보 꺼내기
             String id = jwtTokenService.getUserId(accessToken);
             String nickName = jwtTokenService.getUserNickName(accessToken);
@@ -42,12 +44,13 @@ public class JwtFilter extends GenericFilterBean {
                     .nickname(nickName)
                     .role(role)
                     .build();
-
+            log.info("현재 사용자의 ID : {}, nickName : {}, role : {}",id,nickName,role);
             //SecurityContext에 권한과 함께 저장
             Authentication auth = getAuthentication(userLoginDTO, userLoginDTO.getRole());
             SecurityContextHolder.getContext().setAuthentication(auth);
-            UserLoginDTO userNow = (UserLoginDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            System.out.println("현재 사용자 ID : " + userNow.getId() + ", 권한 : " + userNow.getRole() + ", 닉네임 : " + userNow.getNickname());
+            log.info("인증 권한 부여");
+        }else{
+            log.info("유효한 토큰이 없습니다.");
         }
 
         chain.doFilter(request, response);
