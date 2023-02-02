@@ -1,5 +1,6 @@
 package com.example.websocket.dto;
 
+import java.lang.annotation.Documented;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,10 +1,12 @@
 package com.example.websocket.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import nonapi.io.github.classgraph.json.Id;
+import lombok.ToString;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.time.LocalDateTime;
@@ -14,10 +16,13 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class SendMessage {
+
     @Id
     private String mid;
     private String sender;
+    private String senderNickname;
     private String content;
     private LocalDateTime sendTime;
 
