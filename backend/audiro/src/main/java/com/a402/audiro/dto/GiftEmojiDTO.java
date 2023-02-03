@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class GiftEmojiDTO {
-
     private int emo1;
     private int emo2;
     private int emo3;

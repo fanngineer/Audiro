@@ -89,6 +89,10 @@ public class Gift {
         return song;
     }
 
+    public long getSongId() { return song.getId(); }
+
+    public long getSpotId() { return spot.getId(); }
+
     public String getGiftImg() {
         return giftImg;
     }
