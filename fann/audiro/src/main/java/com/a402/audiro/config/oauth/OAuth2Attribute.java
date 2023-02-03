@@ -1,4 +1,4 @@
-package com.a402.audiro.config.oauth.provider;
+package com.a402.audiro.config.oauth;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -57,7 +57,7 @@ public class OAuth2Attribute {
                 .name((String) kakaoProfile.get("nickname"))
                 .email((String) kakaoAccount.get("email"))
                 .picture((String)kakaoProfile.get("profile_image_url"))
-                .idOnly("Kakao" + attributes.get("email"))
+                .idOnly("Kakao" + kakaoAccount.get("email"))
                 .attributes(kakaoAccount)
                 .attributeKey(attributeKey)
                 .build();
@@ -71,7 +71,7 @@ public class OAuth2Attribute {
                 .name((String) response.get("name"))
                 .email((String) response.get("email"))
                 .picture((String) response.get("profile_image"))
-                .idOnly("Naver" + (String) attributes.get("id"))
+                .idOnly("Naver" + response.get("id"))
                 .attributes(response)
                 .attributeKey(attributeKey)
                 .build();

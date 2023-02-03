@@ -45,7 +45,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler{
             Authentication authentication) throws IOException, ServletException {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
         UserOAuth2DTO userOAuth2DTO = userRequestMapper.toDto(oAuth2User);
-        log.info("현재 로그인된 사용자 정보 : {}",userOAuth2DTO.toString());
+        log.info("현재 로그인된 사용자 정보 : {}", userOAuth2DTO.toString());
         //토큰에 담을 유저 정보
         String role = "ROLE_USER";
         String nowId = userOAuth2DTO.getId();
@@ -65,10 +65,12 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler{
                     .img(userOAuth2DTO.getImg())
                     .build();
             userRepository.save(userEntity);
+            log.info("회원가입 완료 : {}",userEntity.toString());
         }else{
             log.info("기존 회원입니다.");
             role = userEntity.getRole();
             nickName = userEntity.getNickname();
+            log.info("회원 정보 업데이트 Role << {} , nickname << {}",role,nickName);
         }
 
         //토큰발급
@@ -87,8 +89,6 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler{
         response.addHeader("Refresh", token.getRefreshToken());
         response.setContentType("application/json;charset=UTF-8");
         log.info("Response에 담긴 jwtToken : " + "{}", token);
-//        PrintWriter writer = response.getWriter();
-//        writer.println(objectMapper.writeValueAsString(token));
-//        writer.flush();
+//
     }
 }

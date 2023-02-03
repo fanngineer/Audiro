@@ -1,11 +1,16 @@
 package com.a402.audiro.controller;
 
 
+import com.a402.audiro.config.util.jwt.JwtTokenService;
+import com.a402.audiro.config.util.jwt.JwtTokens;
 import com.a402.audiro.dto.UserInfoDTO;
+import com.a402.audiro.dto.UserLoginDTO;
 import com.a402.audiro.service.UserService;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,6 +22,7 @@ public class UserController {
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
     private final UserService userService;
+    private final JwtTokenService jwtTokenService;
 
     //선택한 유저 정보 조회
     @GetMapping("/{id}")
@@ -35,7 +41,12 @@ public class UserController {
         try{
             userService.updateUserNickName(newNickName);
             //responseHeader에 새로운 토큰을 날려보내야함.
-            return ResponseEntity.ok().body(SUCCESS);
+            UserLoginDTO userLoginDTO = (UserLoginDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String id = userLoginDTO.getId();
+            String role = userLoginDTO.getRole();
+            JwtTokens newTokens = jwtTokenService.generateToken(id, newNickName, role);
+            return ResponseEntity.ok().header("Auth",newTokens.getAccessToken()).header("Refresh",newTokens.getRefreshToken()).body(SUCCESS);
+
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

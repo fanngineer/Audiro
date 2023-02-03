@@ -3,6 +3,7 @@ package com.a402.audiro.config.util.jwt;
 import com.a402.audiro.dto.UserLoginDTO;
 import com.a402.audiro.entity.User;
 import com.a402.audiro.repository.UserRepository;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,16 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 @Slf4j
 @RequiredArgsConstructor
-public class JwtFilter extends GenericFilterBean {
+public class JwtFilter extends OncePerRequestFilter {
     private final JwtTokenService jwtTokenService;
     private final UserRepository userRepository;
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String accessToken = ((HttpServletRequest)request).getHeader("Auth");
         log.info("AccessToken from request header : " + accessToken);
         //요청을 받으면 들어온 토큰에 대해서 유효성 검증!!

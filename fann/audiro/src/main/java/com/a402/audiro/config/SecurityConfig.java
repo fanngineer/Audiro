@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -32,6 +33,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     private UserRepository userRepository;
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        // resources 모든 접근을 허용하는 설정을 해버리면
+        // HttpSecurity 설정한 ADIM권한을 가진 사용자만 resources 접근가능한 설정을 무시해버린다.
+        web.ignoring()
+                .antMatchers("/","/loginForm","/token/refresh");
+    }
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
@@ -40,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //                .and()
 //                .authorizeRequests()
         http.authorizeRequests()
-                .antMatchers("/","/loginForm","/exception/**","/common","/swagger-ui.html").permitAll() //메인페이지는 모든 사용자에게 가능하게
+                .antMatchers("/","/loginForm","/exception/**","/common","/swagger-ui.html","/token/refresh").permitAll() //메인페이지는 모든 사용자에게 가능하게
                 //.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
                 //.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') and hasRole('ROLE_USER')")
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") //인증뿐 아니라 권한이 있는 사람만

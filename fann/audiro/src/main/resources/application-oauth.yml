@@ -21,10 +21,11 @@ spring:
             authorization-grant-type: authorization_code
             redirect-uri: http://localhost:8080/login/oauth2/code/naver
           kakao:
-            client-secret: <your secret>
-            client-id: <your id>
+            client-secret: 7S4aXXvgDfDeabHg7sDXE3x8bmEVFs7n
+            client-id: 36efccc7ac6a65a752e2994d8568eafb
             scope:
-              - profile
+              - profile_nickname
+              - profile_image
               - account_email
             client-name: Kakao
             authorization-grant-type: authorization_code
