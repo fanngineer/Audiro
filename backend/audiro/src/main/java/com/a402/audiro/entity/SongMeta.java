@@ -34,6 +34,7 @@ public class SongMeta {
     @Column(name = "gift_cnt")
     private int cnt;
 
+    @Column(name = "update_time")
     private LocalDateTime updateTime;
 
     @Override

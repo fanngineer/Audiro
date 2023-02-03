@@ -1,8 +1,6 @@
 package com.a402.audiro.db;
 
-import com.a402.audiro.entity.Song;
 import com.a402.audiro.entity.SongMeta;
-import com.a402.audiro.entity.Spot;
 import com.a402.audiro.repository.SongMetaRepository;
 import com.a402.audiro.repository.SongRepository;
 import com.a402.audiro.repository.SpotRepository;
