@@ -11,13 +11,13 @@ import org.springframework.web.util.HtmlUtils;
 @Controller
 @Slf4j
 public class GreetingController {
-
-    @MessageMapping("/{channel}")
-    @SendTo("/topic/{channel}")
-    public Greeting greeting(@DestinationVariable("channel") String channel, HelloMessage message) throws Exception{
-        Thread.sleep(500);
-        log.warn("channel" + channel);
-        return new Greeting(HtmlUtils.htmlEscape(message.getName()) + ">> " + HtmlUtils.htmlEscape(message.getMessage()));
-    }
+//
+//    @MessageMapping("/{channel}")
+//    @SendTo("/topic/{channel}")
+//    public Greeting greeting(@DestinationVariable("channel") String channel, HelloMessage message) throws Exception{
+//        Thread.sleep(500);
+//        log.warn("channel" + channel);
+//        return new Greeting(HtmlUtils.htmlEscape(message.getName()) + ">> " + HtmlUtils.htmlEscape(message.getMessage()));
+//    }
 
 }

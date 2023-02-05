@@ -35,7 +35,7 @@ function disconnect() {
 
 function sendName() {
   var channel = $("#channel").val();
-  stompClient.send("/pub/"+channel, {}, JSON.stringify({'name': $("#name").val(), 'message': $("#msg").val()}));
+  stompClient.send("/pub/"+channel, {}, JSON.stringify({'name': $("#name").val(), 'content': $("#msg").val()}));
 }
 
 function showGreeting(message) {
