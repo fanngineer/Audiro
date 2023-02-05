@@ -15,12 +15,36 @@ https://kauth.kakao.com/oauth/authorize
 
 
 
-getUserInfo
+loginGoogle()
+/oauth2/authorization/google
+response Header jwt Token
 
-logout
+loginNaver()
+/oauth2/authorization/naver
+response Header jwt Token
 
-login
+loginKakao()
+/oauth2/authorization/kakao
+response Header jwt Token
 
-changeImg
 
-changeNickname
+//선택한 유저 정보 조회
+getUserInfo - get
+user/{id}
+response status OK
+response Body UserInfo
+
+//유저 이미지 변경
+changeUSerImg - post
+user/change-img
+response status OK
+
+//유저 닉네임 변경
+changeUserNickname - post
+user/change-nickname
+response status OK
+
+//유저 상태메세지 변경
+changeUserMsg - post
+user/change-msg
+response status OK

@@ -1,8 +1,11 @@
 package com.example.websocket.controller;
 
+import com.example.websocket.dto.ChannelList;
 import com.example.websocket.dto.ResponseMessage;
 import com.example.websocket.dto.SendMessage;
 import com.example.websocket.service.RedisOperationService;
+import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
@@ -26,19 +29,33 @@ public class ChatController {
         log.warn("user1: "+m1);
         log.warn("user1: "+m2);
         try{
-            String str = redisOperationService.createChannel(m1, m2);
-            return ResponseEntity.ok().body(str);
+//            String str = redisOperationService.createChannel(m1, m2);
+            Set<ChannelList> list = redisOperationService.getChannelList(m1);
+            return ResponseEntity.ok().body(list);
         }catch(Exception e){
+            log.error(e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @GetMapping("/msg")
     public ResponseEntity<?> setMessage(@RequestParam("cid") String cid, @RequestParam("sender")String sender, @RequestParam("content") String content){
+        log.warn("controller");
         try{
             redisOperationService.saveMessage(cid, sender, content);
             return ResponseEntity.ok().body("success");
         }catch(Exception e){
+            log.error(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/enter")
+    public ResponseEntity<?> getAllMessage(@RequestParam("cid") String cid, @RequestParam("uid") String uid){
+        try{
+            return ResponseEntity.ok().body("success");
+        }catch(Exception e){
+            log.error(e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

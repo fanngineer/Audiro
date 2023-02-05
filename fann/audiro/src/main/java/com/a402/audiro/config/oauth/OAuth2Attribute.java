@@ -1,13 +1,15 @@
-package com.a402.audiro.config.oauth.provider;
+package com.a402.audiro.config.oauth;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @ToString
 @Builder(access = AccessLevel.PRIVATE)
 @Getter
@@ -35,6 +37,7 @@ public class OAuth2Attribute {
 
     private static OAuth2Attribute ofGoogle(String attributeKey,
             Map<String, Object> attributes) {
+        log.info("Google 로그인");
         return OAuth2Attribute.builder()
                 .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
@@ -49,12 +52,12 @@ public class OAuth2Attribute {
             Map<String, Object> attributes) {
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
         Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");
-
+        log.info("KaKao 로그인");
         return OAuth2Attribute.builder()
                 .name((String) kakaoProfile.get("nickname"))
                 .email((String) kakaoAccount.get("email"))
                 .picture((String)kakaoProfile.get("profile_image_url"))
-                .idOnly("Kakao" + attributes.get("email"))
+                .idOnly("Kakao" + kakaoAccount.get("email"))
                 .attributes(kakaoAccount)
                 .attributeKey(attributeKey)
                 .build();
@@ -63,12 +66,12 @@ public class OAuth2Attribute {
     private static OAuth2Attribute ofNaver(String attributeKey,
             Map<String, Object> attributes) {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
-
+        log.info("Naver 로그인");
         return OAuth2Attribute.builder()
                 .name((String) response.get("name"))
                 .email((String) response.get("email"))
                 .picture((String) response.get("profile_image"))
-                .idOnly("Google" + (String) attributes.get("id"))
+                .idOnly("Naver" + response.get("id"))
                 .attributes(response)
                 .attributeKey(attributeKey)
                 .build();

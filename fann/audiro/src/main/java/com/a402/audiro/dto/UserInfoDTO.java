@@ -1,6 +1,6 @@
 /*
- * 토큰과 CONTEXTHOLDER에서 현재 로그인된 사용자를 꺼내오기위한 DTO
- */
+* 회원 페이지에서 사용자 정보 불러올때 사용할 DTO
+* */
 package com.a402.audiro.dto;
 
 import lombok.AllArgsConstructor;
@@ -12,8 +12,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Builder
-public class UserLoginDTO {
+public class UserInfoDTO {
     private String id;
     private String nickname;
+    private String name;
+    private String email;
+    private String msg;
+    private String img;
     private String role;
 }
