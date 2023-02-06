@@ -31,6 +31,9 @@ public class SMSController {
     @Value("${API_SECRET_KEY}")
     private String apiSecretKey;
 
+    @Value("${NUMBER}")
+    private String number;
+
     private DefaultMessageService messageService;
 
     @PostConstruct
@@ -43,7 +46,7 @@ public class SMSController {
         Message message = new Message();
         messageDTO.makeSentence();
         // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-        message.setFrom("01092039218");
+        message.setFrom(number);
         message.setTo(messageDTO.getPhoneNumber());
         message.setText(messageDTO.getMessage());
 
