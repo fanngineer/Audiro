@@ -14,7 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class JwtTokens {
 
-    private String token;
+    private String accessToken;
     private String refreshToken;
 
 }

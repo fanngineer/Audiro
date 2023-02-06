@@ -6,7 +6,6 @@
 
 package com.a402.audiro.config.oauth;
 
-import com.a402.audiro.config.oauth.provider.OAuth2Attribute;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -60,10 +60,11 @@ public class ChatController {
         }
     }
 
-    @MessageMapping("/{channel}/message")
+    @MessageMapping("/{channel}")
     @SendTo("/sub/{channel}")
     public ResponseMessage sendMessage(String userId, @DestinationVariable("channel") String channelId, SendMessage msg){
         // Redis에 저장하는 코드 필요
+        log.warn(msg.getContent());
         return new ResponseMessage(userId, msg.getContent(), msg.getSendTime());
     }
 }
