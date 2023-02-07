@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState,useRef}from 'react';
 import styled from 'styled-components';
 import Headset from '../assets/images/Group.png'
 import Send from '../assets/images/send.png'
@@ -128,13 +128,34 @@ const StyledWriting=styled.div`
     margin-left:36px;
     font-size:12px;
     line-height:12.1px;
+    visibility:  ${props => props.ishidden || 'hidden'};
 `;
 
 
+
+
+
 const Messages = () => {
+
+    const [ishidden, setishidden] = useState('hidden')
+
+    function Typing(){
+        
+        setishidden('visible')
+        console.log(ishidden)
+    }
+    function TypeDone(){
+        
+        setishidden('hidden')
+        console.log(ishidden)
+    }
+
     function submitHandler(e){
         e.preventDefault()
         console.log('submitted')
+ 
+       
+
     }
 
     return (
@@ -167,10 +188,10 @@ const Messages = () => {
         <br/>
         <br/>
         </StyledMessageBox>
-        <StyledWriting>메세지 입력 중...</StyledWriting>
+        <StyledWriting  ishidden={ishidden}> 메세지 입력 중...</StyledWriting>
         <StyledHr/>
         
-        <StyledInputSet><form id='send' onSubmit={submitHandler}><StyledInput  placeholder= "새로운 사람과의 대화를 시작합니다" type='text' /> </form> <StyledSendImage form='send' type='image' src={Send}/> </StyledInputSet>
+        <StyledInputSet ><form id={'send'} onSubmit={submitHandler}><StyledInput  placeholder= "새로운 사람과의 대화를 시작합니다" type='text' onFocus={Typing} onBlur={TypeDone}/> </form> <StyledSendImage form='send' type='image' src={Send}/> </StyledInputSet>
         </>
     );
 };
