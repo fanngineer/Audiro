@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from "react";
-import GoogleLogin from "react-google-login";
+import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 
 const clientId = "300713055142-t1lskcvgiqdn5fln1ajsiast5t3kdm28.apps.googleusercontent.com";
@@ -20,7 +20,7 @@ const GoogleButton = ({onSocial}) => {
     }, []);
 
     const onSuccess = (response) => {
-        //console.log(response.accessToken);
+        console.log(response.accessToken);
         setToken(response.accessToken);
     };
 
@@ -30,12 +30,14 @@ const GoogleButton = ({onSocial}) => {
 
     return (
         <div>
-            <GoogleLogin
-                clientId={clientId}
-                buttonText="구글로 로그인하기"
-                onSuccess={onSuccess}
-                onFailure={onFailure}
-            />
+          
+                <GoogleLogin
+                    clientId={clientId}
+                    buttonText="구글로 로그인하기"
+                    onSuccess={onSuccess}
+                    onFailure={onFailure}/>
+        
+            
         </div>
     );
 };
