@@ -6,6 +6,9 @@ import naver from "../assets/images/naver_logo.png"
 import google from "../assets/images/google_logo.png"
 import axios from "axios";
 
+import { GoogleLoginButton } from "react-social-login-buttons";
+import GoogleButton from "../components/Login/GoogleButton";
+
 const StyledLoginContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -66,7 +69,7 @@ const StyledLoginLogoNaver = styled.div`
 const Login = () =>{
 
     const GoogleClicked = () => {
-        axios.get('/api/oauth2/authorization/google')
+        axios.get('/oauth2/authorization/google')
         .then((res) => {
             console.log(res);
         })
@@ -89,6 +92,9 @@ const Login = () =>{
                     <StyledLoginLogoNaver><img src={naver} height="20"/></StyledLoginLogoNaver>
                     네이버로 로그인하기
                 </StyledLoginBtn>
+                
+                    <GoogleButton></GoogleButton>
+                
             </StyledLoginBtnWrapper>
             </StyledLoginContainer>
         </div>
