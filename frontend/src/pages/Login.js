@@ -114,10 +114,10 @@ const Login = () =>{
             <StyledLoginContainer>
             <StyledLoginTitle>로그인</StyledLoginTitle>
             <StyledLoginBtnWrapper>
-                <StyledLoginBtn background="#FFE812" onClick={Kakaologin}> 
+               <a href='http://i8a402.p.ssafy.io:80/oauth2/authorization/google'> <StyledLoginBtn background="#FFE812" > 
                     <StyledLoginLogoKaKao>
                         <img src={kakao} height="20"/></StyledLoginLogoKaKao> 카카오로 로그인하기
-                </StyledLoginBtn>
+                </StyledLoginBtn></a>
                 <StyledLoginBtn background="#FFFFFF"> 
                     <StyledLoginLogoGoogle><img src={google} height="18"/></StyledLoginLogoGoogle>
                     구글로 로그인하기

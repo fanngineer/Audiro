@@ -4,7 +4,7 @@ import Headset from '../assets/images/Group.png'
 import Send from '../assets/images/send.png'
 import Logo from '../components/Logo';
 import Nav from '../components/Nav';
-
+import Message from '../components/Message';
 const StyledMessageBox=styled.div`
     display:flex;
     flex-direction:column;
@@ -167,24 +167,11 @@ const Messages = () => {
         <StyledMessageBox>
           
         
-        <StyledMyMessage> 
-            <StyledSentMessage >내가 보낸 메시지 
-                <br/>
-                <br/><StyledTime>작성시간</StyledTime>
-            </StyledSentMessage>
-            <StyledHeadsetWrapper><StyledHeadsetImage src={Headset}/></StyledHeadsetWrapper>
-        </StyledMyMessage>
+        <Message/>
         
-
-        <StyledMessage>
-            <StyledHeadsetWrapper><StyledHeadsetImage src={Headset}/></StyledHeadsetWrapper>
-            <div>
-                <StyledSender> 보낸사람 </StyledSender> 
-            <StyledGotMessage ><div>받은 메시지</div></StyledGotMessage>
-            <StyledTime>작성시간</StyledTime>
-            </div>  
-        </StyledMessage>
-
+        <Message/>
+        <Message/>
+        
         <br/>
         <br/>
         </StyledMessageBox>
