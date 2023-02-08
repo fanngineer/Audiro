@@ -16,10 +16,10 @@ public class StompController {
     private SimpMessagingTemplate template;
 
     @GetMapping("/hi")
-    @MessageMapping("/25")
-    public void sendMessage(String message){
+//    @MessageMapping("/25")
+    public void sendMessage(long spotId, String message){
         log.info("메세지를 보냅니다.");
-        template.convertAndSend("/sub/25", message);
+        template.convertAndSend("/sub/" + spotId, message);
         log.info("메세지 전송이 완료되었습니다. : " + message);
     }
 }

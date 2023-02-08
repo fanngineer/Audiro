@@ -158,16 +158,7 @@ class Client:
         self.subscriptions[headers["id"]] = callback
         self._transmit("SUBSCRIBE", headers)
 
-        def unsubscribe():
-            self.unsubscribe(headers["id"])
-
-        return headers["id"], unsubscribe
-
-    def unsubscribe(self, id):
-        del self.subscriptions[id]
-        return self._transmit("UNSUBSCRIBE", {
-            "id": id
-        })
+        return headers["id"]
 
     def ack(self, message_id, subscription, headers):
         if headers is None:
@@ -175,10 +166,3 @@ class Client:
         headers["message-id"] = message_id
         headers['subscription'] = subscription
         return self._transmit("ACK", headers)
-
-    def nack(self, message_id, subscription, headers):
-        if headers is None:
-            headers = {}
-        headers["message-id"] = message_id
-        headers['subscription'] = subscription
-        return self._transmit("NACK", headers)
