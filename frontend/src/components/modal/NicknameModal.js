@@ -30,7 +30,7 @@ const NicknameModal = (props) => {
        
         })
         .then ((res)=>{
-            console.log(res.header.refresh)
+            console.log(res.headers.refresh)
             const jwtToken=res.headers.get('Refresh')
             localStorage.setItem('login-token', jwtToken);
             console.log('success')

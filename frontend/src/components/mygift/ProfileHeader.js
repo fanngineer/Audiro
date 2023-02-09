@@ -6,14 +6,11 @@ import {useParams} from 'react-router-dom'
 import DeleteModal from "../modal/DeleteModal";
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
 import NicknameModal from "../modal/NicknameModal";
-=======
 
 import axios from "axios";
 import jwt from 'jwt-decode';
 
->>>>>>> 7415966b3420ea0f2e6ea1ae242b9b4a98eaa541
 const StyledHeader = styled.div`
     margin-top: 20px;
     margin-left: 10px;
@@ -75,9 +72,7 @@ const ProfileHeader = (props) => {
   const outside = useRef();
   const {giftid}=useParams();
   console.log([deleteModalOpen, setDeleteModalOpen])
-<<<<<<< HEAD
   const [NicknameOpen, setNicknameOpen] = useState(false);
-=======
 
   const token = localStorage.getItem('login-token');
   console.log(jwt(token));
@@ -93,7 +88,6 @@ const ProfileHeader = (props) => {
   }, []);
 
 
->>>>>>> 7415966b3420ea0f2e6ea1ae242b9b4a98eaa541
   return (
     <div>
       <StyledHeader>
@@ -119,11 +113,8 @@ const ProfileHeader = (props) => {
             </Link>
         </StyledMyGiftHeaderWrapper>
       </StyledHeader>
-<<<<<<< HEAD
       {modalOpen && <Modal className="gift-modal" setOpenModal={setModalOpen} />}
       {NicknameOpen && <NicknameModal/> }
-=======
->>>>>>> 7415966b3420ea0f2e6ea1ae242b9b4a98eaa541
       </div>
   );
   

@@ -121,11 +121,7 @@ const GiftList = (props) =>{
         <div>
             <Logo/>
             <Nav/>
-<<<<<<< HEAD
-            <ProfileHeader nickname={nickname} giftcnt={giftcnt} />
-=======
             <ProfileHeader nickname={nickname} giftcnt={giftcnt} mmcnt={mmcnt}/>
->>>>>>> 7415966b3420ea0f2e6ea1ae242b9b4a98eaa541
 
             <StyledMyGiftListWrapper>
                 <StyledMyGiftList>
