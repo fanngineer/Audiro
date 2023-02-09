@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useState,useRef}from 'react';
 import styled from 'styled-components';
 import Headset from '../assets/images/Group.png'
 import Send from '../assets/images/send.png'
 import Logo from '../components/Logo';
 import Nav from '../components/Nav';
-
+import Message from '../components/Message';
 const StyledMessageBox=styled.div`
     display:flex;
     flex-direction:column;
@@ -128,13 +128,34 @@ const StyledWriting=styled.div`
     margin-left:36px;
     font-size:12px;
     line-height:12.1px;
+    visibility:  ${props => props.ishidden || 'hidden'};
 `;
 
 
+
+
+
 const Messages = () => {
+
+    const [ishidden, setishidden] = useState('hidden')
+
+    function Typing(){
+        
+        setishidden('visible')
+        console.log(ishidden)
+    }
+    function TypeDone(){
+        
+        setishidden('hidden')
+        console.log(ishidden)
+    }
+
     function submitHandler(e){
         e.preventDefault()
         console.log('submitted')
+ 
+       
+
     }
 
     return (
@@ -146,31 +167,18 @@ const Messages = () => {
         <StyledMessageBox>
           
         
-        <StyledMyMessage> 
-            <StyledSentMessage >내가 보낸 메시지 
-                <br/>
-                <br/><StyledTime>작성시간</StyledTime>
-            </StyledSentMessage>
-            <StyledHeadsetWrapper><StyledHeadsetImage src={Headset}/></StyledHeadsetWrapper>
-        </StyledMyMessage>
+        <Message/>
         
-
-        <StyledMessage>
-            <StyledHeadsetWrapper><StyledHeadsetImage src={Headset}/></StyledHeadsetWrapper>
-            <div>
-                <StyledSender> 보낸사람 </StyledSender> 
-            <StyledGotMessage ><div>받은 메시지</div></StyledGotMessage>
-            <StyledTime>작성시간</StyledTime>
-            </div>  
-        </StyledMessage>
-
+        <Message/>
+        <Message/>
+        
         <br/>
         <br/>
         </StyledMessageBox>
-        <StyledWriting>메세지 입력 중...</StyledWriting>
+        <StyledWriting  ishidden={ishidden}> 메세지 입력 중...</StyledWriting>
         <StyledHr/>
         
-        <StyledInputSet><form id='send' onSubmit={submitHandler}><StyledInput  placeholder= "새로운 사람과의 대화를 시작합니다" type='text' /> </form> <StyledSendImage form='send' type='image' src={Send}/> </StyledInputSet>
+        <StyledInputSet ><form id={'send'} onSubmit={submitHandler}><StyledInput  placeholder= "새로운 사람과의 대화를 시작합니다" type='text' onFocus={Typing} onBlur={TypeDone}/> </form> <StyledSendImage form='send' type='image' src={Send}/> </StyledInputSet>
         </>
     );
 };
