@@ -6,7 +6,7 @@ import {useParams} from 'react-router-dom'
 import DeleteModal from "../modal/DeleteModal";
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
-
+import NicknameModal from "../modal/NicknameModal";
 const StyledHeader = styled.div`
     margin-top: 20px;
     margin-left: 10px;
@@ -20,6 +20,7 @@ const StyledMyGiftTitle = styled.div`
     margin-bottom: 25px;
     margin-left: 10px;
     color: white;
+    display: flex;
 `;
 
 const StyledMyGiftHeaderWrapper = styled.div`
@@ -61,11 +62,11 @@ const ProfileHeader = (props) => {
   const outside = useRef();
   const {giftid}=useParams();
   console.log([deleteModalOpen, setDeleteModalOpen])
-
+  const [NicknameOpen, setNicknameOpen] = useState(false);
   return (
     <div>
       <StyledHeader>
-        <StyledMyGiftTitle>반가워요, {props.nickname}님 👋 </StyledMyGiftTitle>
+        <StyledMyGiftTitle>반가워요, <div onClick={()=>{setNicknameOpen(true)}}>{props.nickname}님</div> 👋 </StyledMyGiftTitle>
 
         <StyledMyGiftHeaderWrapper>
           <StyledMyGiftProfile><BsHeadphones fill='black' size="30"/></StyledMyGiftProfile>
@@ -86,6 +87,7 @@ const ProfileHeader = (props) => {
         </StyledMyGiftHeaderWrapper>
       </StyledHeader>
       {modalOpen && <Modal className="gift-modal" setOpenModal={setModalOpen} />}
+      {NicknameOpen && <NicknameModal/> }
       </div>
   );
   

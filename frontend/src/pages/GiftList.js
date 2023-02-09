@@ -108,12 +108,12 @@ const GiftList = (props) =>{
         <div>
             <Logo/>
             <Nav/>
-            <ProfileHeader nickname={nickname} giftcnt={giftcnt}/>
+            <ProfileHeader nickname={nickname} giftcnt={giftcnt} />
 
             <StyledMyGiftListWrapper>
                 <StyledMyGiftList>
                     {dataList?.map(item => (
-                        <Gift nickname={nickname} giftcnt={giftcnt} key={item.id} id={item.id} src={item.giftImg}/>
+                        <Gift nickname='nickname' giftcnt='20'  id='1' src='https://cdn.discordapp.com/attachments/1056882470429138968/1068081563310506014/Notes_230126_170914.jpg'/>
                     ))}
                 </StyledMyGiftList>
             </StyledMyGiftListWrapper>
