@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ManitoDTO {
-
     private Long userId;
     private Long songId;
     private GiftTag giftTag;

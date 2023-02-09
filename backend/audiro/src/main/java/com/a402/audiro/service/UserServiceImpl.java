@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
             long loginUserId = loginUser.getId();
             log.info("사용자 {}의 사진을 변경 시작", loginUserId);
             User userEntity = userRepository.findById(loginUserId);
-            userEntity.setNickname(newImg);
+            userEntity.setImg(newImg);
             userRepository.save(userEntity);
             log.info("사진 변경 완료");
         } catch (Exception e) {

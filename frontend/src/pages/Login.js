@@ -112,7 +112,7 @@ const Login = () =>{
     }
     return (
         <div>
-            <Logo />
+            <Logo type="login"/>
             <StyledLoginContainer>
             <StyledLoginTitle>로그인</StyledLoginTitle>
             <StyledLoginBtnWrapper>

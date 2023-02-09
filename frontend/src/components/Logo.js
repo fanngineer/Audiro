@@ -1,12 +1,14 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import styled, { keyframes } from 'styled-components';
-import Headset from '../assets/images/Group.png'
+
+import axios from "axios";
+import jwt from 'jwt-decode';
+import LogoUserInfo from "./LogoUserInfo";
 
 const StyledLogoContainer = styled.div`
     display: flex;
     flex-direction: column;
     margin-left: 35px;
-    padding-bottom: 30px;
     padding-top: 20px;
 `;
 
@@ -65,29 +67,30 @@ const StyledLogoCircleRight = styled.div`
     border-radius: 100%;
 `;
 
-const StyledLogoGreet=styled.div`
-    display: flex;
-    justify-content: end;
-    margin-right: 15px;
-`;
-
-const StyledLogoHeadset=styled.img`
-    height: 24px;
-    width: 24px;
-    background-color: white;
-    border-radius: 100%;
-    margin-right: 8px;
-`;
 
 const Logo=(props)=>{   
+
+    const token = localStorage.getItem('login-token');
+    console.log(jwt(token));
+    const nickname = jwt(token)['nickName']; 
+    console.log(nickname);
+    const userId = jwt(token)['userId']; 
+    console.log(userId);
+
+    const [userImg, setuserImg] = useState();
+    useEffect(() => {
+        axios.get(`http://i8a402.p.ssafy.io/api/user/${userId}`, {headers: {Auth: `${token}`}})
+            .then((res) => {
+                 setuserImg(res.data.img);
+                })
+    }, []);
 
     return(
         <StyledLogoContainer>
             <StyledLogoCircleLeft></StyledLogoCircleLeft>
             <StyledLogo>어디:로</StyledLogo>
             <StyledSubLogo>나와 새로운 사람의 음악 공간</StyledSubLogo>
-            {/* {props.userId}님 */}
-            {/* <StyledLogoGreet><StyledLogoHeadset src={Headset}/>{props.userId}님</StyledLogoGreet> */}
+            <LogoUserInfo type={props.type}/>
             <StyledLogoCircleRight></StyledLogoCircleRight>
         </StyledLogoContainer>
     );

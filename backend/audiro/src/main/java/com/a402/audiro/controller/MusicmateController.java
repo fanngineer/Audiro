@@ -1,6 +1,7 @@
 package com.a402.audiro.controller;
 
 import com.a402.audiro.dto.MusicmateDTO;
+import com.a402.audiro.dto.MusicmateListDTO;
 import com.a402.audiro.service.MusicmateService;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,10 @@ public class MusicmateController {
     @GetMapping
     public ResponseEntity<?> getMusicmateList(@RequestParam Long userId){
         try{
-            List<String> musicmateNickNameList = musicmateService.getMusicmateList(userId);
-            return ResponseEntity.ok().body(musicmateNickNameList);
+//            List<Long> musicmateNickNameList = musicmateService.getMusicmateList(userId);
+            List<MusicmateListDTO> musicmateInfoList = musicmateService.getMusicmateList(userId);
+
+            return ResponseEntity.ok().body(musicmateInfoList);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

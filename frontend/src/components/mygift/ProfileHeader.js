@@ -6,7 +6,14 @@ import {useParams} from 'react-router-dom'
 import DeleteModal from "../modal/DeleteModal";
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import NicknameModal from "../modal/NicknameModal";
+=======
+
+import axios from "axios";
+import jwt from 'jwt-decode';
+
+>>>>>>> 7415966b3420ea0f2e6ea1ae242b9b4a98eaa541
 const StyledHeader = styled.div`
     margin-top: 20px;
     margin-left: 10px;
@@ -32,8 +39,8 @@ const StyledMyGiftHeaderWrapper = styled.div`
 `;
 
 const StyledMyGiftProfile = styled.div`
-    height: 40px;
-    width: 40px;
+    height: 50px;
+    width: 50px;
     border-radius: 100%;
     background-color: white;
     display: flex;
@@ -56,20 +63,46 @@ const StyledMyGiftListTitle = styled.div`
     color: white;
 `;
 
+const StyledProfileImg=styled.img`
+    background-color: white;
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+`;
+
 const ProfileHeader = (props) => {
-  const [modalOpen, setModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const outside = useRef();
   const {giftid}=useParams();
   console.log([deleteModalOpen, setDeleteModalOpen])
+<<<<<<< HEAD
   const [NicknameOpen, setNicknameOpen] = useState(false);
+=======
+
+  const token = localStorage.getItem('login-token');
+  console.log(jwt(token));
+  const userId = jwt(token)['userId']; 
+  console.log(userId);
+
+  const [userImg, setuserImg] = useState();
+  useEffect(() => {
+    axios.get(`http://i8a402.p.ssafy.io/api/user/${userId}`, {headers: {Auth: `${token}`}})
+      .then((res) => {
+        setuserImg(res.data.img);
+      })
+  }, []);
+
+
+>>>>>>> 7415966b3420ea0f2e6ea1ae242b9b4a98eaa541
   return (
     <div>
       <StyledHeader>
         <StyledMyGiftTitle>반가워요, <div onClick={()=>{setNicknameOpen(true)}}>{props.nickname}님</div> 👋 </StyledMyGiftTitle>
 
         <StyledMyGiftHeaderWrapper>
-          <StyledMyGiftProfile><BsHeadphones fill='black' size="30"/></StyledMyGiftProfile>
+          <StyledMyGiftProfile>
+          <StyledProfileImg src={userImg}/>
+          </StyledMyGiftProfile>
             <Link to="/gifts" style={{ textDecoration: 'none' }}>
                 <div>
                 <StyledMyGiftListNumber>{props.giftcnt}</StyledMyGiftListNumber>
@@ -77,17 +110,20 @@ const ProfileHeader = (props) => {
                 </div>
             </Link>
             <div>
-              <StyledMyGiftListNumber>20</StyledMyGiftListNumber>
+              <StyledMyGiftListNumber>1</StyledMyGiftListNumber>
               <StyledMyGiftListTitle>방문한 지점</StyledMyGiftListTitle>
             </div>
-            <div onClick={()=>{ setModalOpen(true) }}>
-              <StyledMyGiftListNumber>20</StyledMyGiftListNumber>
+            <Link to="/musicmate" style={{ textDecoration: 'none' }}>
+              <StyledMyGiftListNumber>{props.mmcnt}</StyledMyGiftListNumber>
               <StyledMyGiftListTitle>음악 메이트</StyledMyGiftListTitle>
-            </div>
+            </Link>
         </StyledMyGiftHeaderWrapper>
       </StyledHeader>
+<<<<<<< HEAD
       {modalOpen && <Modal className="gift-modal" setOpenModal={setModalOpen} />}
       {NicknameOpen && <NicknameModal/> }
+=======
+>>>>>>> 7415966b3420ea0f2e6ea1ae242b9b4a98eaa541
       </div>
   );
   

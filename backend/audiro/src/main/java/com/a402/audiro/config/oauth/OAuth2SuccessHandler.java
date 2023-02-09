@@ -115,12 +115,11 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler{
     private void writeTokenResponse(HttpServletResponse response, JwtTokens token)
             throws IOException {
         response.setContentType("text/html;charset=UTF-8");
-
         response.addHeader("Auth", token.getAccessToken());
         response.addHeader("Refresh", token.getRefreshToken());
         response.setContentType("application/json;charset=UTF-8");
         log.info("Response에 담긴 jwtToken : " + "{}", token);
-//
+
     }
 
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {

@@ -27,7 +27,6 @@ public class GiftController {
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
     }
 
     @GetMapping("/detail")

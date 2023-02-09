@@ -39,7 +39,7 @@ const StyledHeadsetWrapper=styled.div`
     border-radius:100%;
     width:35px;
     height:35px;
-    diplay:flex;
+    display:flex;
     align-items:center;
     margin:8px
 `;

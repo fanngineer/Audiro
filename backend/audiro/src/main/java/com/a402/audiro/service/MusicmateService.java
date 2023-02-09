@@ -1,8 +1,10 @@
 package com.a402.audiro.service;
 
+import com.a402.audiro.dto.MusicmateListDTO;
+
 import java.util.List;
 
 public interface MusicmateService {
 
-    List<String> getMusicmateList(long userId);
+    List<MusicmateListDTO> getMusicmateList(long userId);
 }
