@@ -1,6 +1,8 @@
-import React from 'react';
+import React ,{useState,useEffect}from 'react';
 import styled from 'styled-components';
 import {useParams} from 'react-router-dom'
+import axios from 'axios'
+import jwt from 'jwt-decode';
 
 const OthersBackground=styled.div`
     position: absolute;
@@ -26,14 +28,39 @@ const OthersMateButton=styled.button`
 `
 
 const Others = () => {
-    const {giftid}=useParams()
+    const {nickname}=useParams();
+    console.log(nickname)
+    const token = localStorage.getItem('login-token');
+    const [dataList, setDataList] = useState([]);
+    const [giftcnt, setGiftcnt] = useState(0);
+
+    const me = jwt(token)['nickName']; 
+    console.log(me);
+    const userId = jwt(token)['userId'];
+    console.log(userId);
+
+    useEffect(() => {
+        axios.get('http://i8a402.p.ssafy.io/api/gift', {params: {nickname: `${nickname}`}, headers: {Auth: `${token}`}})
+            .then((res) => {
+                 console.log(res)
+                 setDataList(res.data);
+                 setGiftcnt(res.data.length);
+                })
+            .catch((err)=>{
+                 console.log (err)
+            })
+    }, []);
+
+ 
+
+    
     return (
         
         <OthersBackground>
             <div>
                 
-            다른 사람 페이지입니다<br/>
-            {giftid}님 페이지입니다.
+            {nickname} 다른 사람 페이지입니다<br/>
+            
             </div>
 
             <OthersMateButton>음악 메이트 신청하기</OthersMateButton>
