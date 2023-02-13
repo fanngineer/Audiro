@@ -19,12 +19,20 @@ const StyledHeader = styled.div`
 `;
 
 const StyledMyGiftTitle = styled.div`
+    display: flex;
+    align-items: center;
     font-size: 17px;
     font-family: var(--font-nanumSquareEB);
     margin-bottom: 25px;
     margin-left: 10px;
     color: white;
+<<<<<<< HEAD
     display: flex;
+=======
+    >*{
+      text-decoration: none;
+    }
+>>>>>>> dev
 `;
 
 const StyledMyGiftHeaderWrapper = styled.div`
@@ -87,15 +95,15 @@ const ProfileHeader = (props) => {
       })
   }, []);
 
+  const [NicknameOpen, setNicknameOpen] = useState(false);
 
   return (
     <div>
       <StyledHeader>
-        <StyledMyGiftTitle>반가워요, <div onClick={()=>{setNicknameOpen(true)}}>{props.nickname}님</div> 👋 </StyledMyGiftTitle>
-
+        <StyledMyGiftTitle><Link to="/userinfo">반가워요, {props.nickname}님 👋</Link></StyledMyGiftTitle>
         <StyledMyGiftHeaderWrapper>
           <StyledMyGiftProfile>
-          <StyledProfileImg src={userImg}/>
+            <StyledProfileImg src={userImg}/>
           </StyledMyGiftProfile>
             <Link to="/gifts" style={{ textDecoration: 'none' }}>
                 <div>
@@ -113,7 +121,6 @@ const ProfileHeader = (props) => {
             </Link>
         </StyledMyGiftHeaderWrapper>
       </StyledHeader>
-      {modalOpen && <Modal className="gift-modal" setOpenModal={setModalOpen} />}
       {NicknameOpen && <NicknameModal/> }
       </div>
   );

@@ -2,8 +2,6 @@ import React, {useState, useRef, useEffect} from "react";
 import Logo from "../components/Logo";
 import Nav from "../components/Nav";
 
-import Modal from "../components/modal/Modal";
-import {BsHeadphones} from "react-icons/bs"
 import {HiMusicNote} from "react-icons/hi";
 import {FaHeart} from "react-icons/fa"
 import fun from '../assets/images/fun.png';
@@ -11,16 +9,10 @@ import love from '../assets/images/love.png';
 import sad from '../assets/images/sad.png';
 import wow from '../assets/images/wow.png';
 import {useParams} from 'react-router-dom'
-import song from '../assets/audio/Ditto.mp3';
 import DeleteModal from "../components/modal/DeleteModal";
 import styled from 'styled-components';
-
-import Youtube from 'react-youtube';
-import YouTube from "react-youtube";
 import ProfileHeader from "../components/mygift/ProfileHeader";
-
 import axios from "axios";
-
 import jwt from 'jwt-decode';
 
 const StyledGiftDetailContainer = styled.div`
@@ -126,9 +118,15 @@ const GiftDetail = (props) => {
   const nickname = jwt(token)['nickName']; 
     
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [like, setLike] = useState(0);
+  const [feedback1, setFeedback1] = useState(0);
+  const [feedback2, setFeedback2] = useState(0);
+  const [feedback3, setFeedback3] = useState(0);
+  const [feedback4, setFeedback4] = useState(0);
 
   const {giftid} = useParams();
   const {giftcnt} = useParams();
+  const {mmcnt} = useParams();
   // console.log([deleteModalOpen, setDeleteModalOpen])
 
   const [dataDetail, setDataDetail] = useState({});
@@ -138,19 +136,35 @@ const GiftDetail = (props) => {
           .then((res) => {
               setDataDetail(res.data)
               setDataEmoji(res.data["emoji"])
+              console.log(res.data)
+              console.log("test")
+              console.log(res.data["emoji"].emo1)
+              setFeedback1(res.data["emoji"].emo1)
+              setFeedback2(res.data["emoji"].emo2)
+              setFeedback3(res.data["emoji"].emo3)
+              setFeedback4(res.data["emoji"].emo4)
           }
       )       
   }, []);
+  
+  const feedbackClicked = (number) => {
+    axios.get('http://i8a402.p.ssafy.io/api/gift/feedback', {params: {giftId: giftid, idx: number}, headers: {Auth: `${token}`}})
+          .then((res) => {
+              console.log(number);
+              console.log(res);
+          }
+      )       
+  }
 
   return (
     <div>
       <Logo/>
       <Nav/>
-      <ProfileHeader nickname={nickname} giftcnt={giftcnt} />
+      <ProfileHeader nickname={nickname} giftcnt={giftcnt} mmcnt={mmcnt} />
       <StyledGiftDetailContainer>
         <StyledGiftDetailBtnWrapper>
           <StyledDetailBtn>비공개</StyledDetailBtn>
-          <StyledDetailBtn>삭제하기</StyledDetailBtn>
+          <StyledDetailBtn onClick={()=> {setDeleteModalOpen(true)}}>삭제하기</StyledDetailBtn>
         </StyledGiftDetailBtnWrapper>
         <StyledDetailImg><img src={dataDetail.giftImg} width="350"/></StyledDetailImg>
 
@@ -161,28 +175,28 @@ const GiftDetail = (props) => {
             <StyledSongDetail>-</StyledSongDetail>
             <StyledSongDetail>{dataDetail.song}</StyledSongDetail>
           </StyledSongWrapper>
-          <StyledHeartWrapper>
+          <StyledHeartWrapper onClick={() => {setLike(like+1); }}>
             <StyledHeartDetail><FaHeart fill="red"/></StyledHeartDetail>
-            <StyledHeartDetail>21340</StyledHeartDetail>
+            <StyledHeartDetail>{like}</StyledHeartDetail>
           </StyledHeartWrapper>
         </StyledDetailBottomWrapper>
 
         <StyledReactionWrapper>
-          <StyledDetailReaction>
+          <StyledDetailReaction onClick={() => {setFeedback1(feedback1+1); feedbackClicked(1)}}>
             <img src={love} height="35px" width="35px"/>
-            <StyledReactionNumber>{dataEmoji.emo1}</StyledReactionNumber>
+            <StyledReactionNumber>{feedback1}</StyledReactionNumber>
           </StyledDetailReaction>
-          <StyledDetailReaction>
+          <StyledDetailReaction onClick={() => {setFeedback2(feedback2+1); feedbackClicked(2)}}>
             <img src={sad} height="35px" width="35px"/>
-            <StyledReactionNumber>{dataEmoji.emo2}</StyledReactionNumber>
+            <StyledReactionNumber>{feedback2}</StyledReactionNumber>
           </StyledDetailReaction>
-          <StyledDetailReaction>
+          <StyledDetailReaction onClick={() => {setFeedback3(feedback3+1); feedbackClicked(3)}}>
             <img src={wow} height="35px" width="35px"/>
-            <StyledReactionNumber>{dataEmoji.emo3}</StyledReactionNumber>
+            <StyledReactionNumber>{feedback3}</StyledReactionNumber>
           </StyledDetailReaction>
-          <StyledDetailReaction>
+          <StyledDetailReaction onClick={() => {setFeedback4(feedback4+1); feedbackClicked(4)}}>
             <img src={fun} height="35px" width="35px"/>
-            <StyledReactionNumber>{dataEmoji.emo4}</StyledReactionNumber>
+            <StyledReactionNumber>{feedback4}</StyledReactionNumber>
           </StyledDetailReaction>
         </StyledReactionWrapper>
         

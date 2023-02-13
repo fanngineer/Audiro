@@ -44,9 +44,9 @@ const LogoUserInfo=(props)=>{
                 })
     }, []);
 
-    if (props.type=='login'){
-        return null;
-    }
+    // if (props.type=='login'){
+    //     return null;
+    // }
 
     return(
         

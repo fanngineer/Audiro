@@ -12,6 +12,8 @@ import Test from "./pages/Test";
 import Others from "./pages/Others";
 import Messages from "./pages/Messages";
 
+import UserInfo from "./pages/UserInfo";
+
 function App() {
 
   return (
@@ -25,7 +27,7 @@ function App() {
           <Route path='/home' element={<Home/>}/>
 
           <Route path="/gifts" element={<GiftList/>}/>
-          <Route path="/gifts/:giftid/:giftcnt" element={<GiftDetail/>}/>
+          <Route path="/gifts/:giftid/:giftcnt/:mmcnt" element={<GiftDetail/>}/>
           
           <Route path="/messenger" element={<MessageList/>}/>
           <Route path='/login' element={<Login/>}/>
@@ -34,6 +36,7 @@ function App() {
           <Route path='/others/:nickname' element={<Others/>}/>
           <Route path='/messenger/:opponent' element={<Messages/>} />
           <Route path='/test/' element={<Test/>}/>
+          <Route path='/userinfo' element={<UserInfo/>}/>
       </Routes>
       </BrowserRouter>
     </div>

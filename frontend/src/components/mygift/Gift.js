@@ -7,7 +7,7 @@ const Gift = (props) => {
   
   return (
     <div>
-        <Link to={`/gifts/${props.id}/${props.giftcnt}`}><img src={props.src} height={105} width={170}/></Link>
+        <Link to={`/gifts/${props.id}/${props.giftcnt}/${props.mmcnt}`}><img src={props.src} height={105} width={170}/></Link>
     </div>
   );
   

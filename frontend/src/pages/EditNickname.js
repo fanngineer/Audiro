@@ -1,21 +1,41 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from "react";
 import styled from 'styled-components';
-import axios from 'axios'
-const StyeldNicknameModal=styled.div`
-    
+import axios from "axios";
+import Logo from "../components/Logo";
+import Nav from "../components/Nav";
+
+import jwt from 'jwt-decode';
+
+
+const StyleInput = styled.input`
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    background: transparent;
+    color: white;
+    font-size: 16px;
+    font-family: var(--font-nanumSquareL);
+    text-align: end;
+    :focus{
+        outline: none !important;
+        border-bottom: 1px solid white;
+    }
 `;
 
-const NicknameModal = (props) => {
+const EditNickname = (props) =>{
 
+    const token = localStorage.getItem('login-token');
+    console.log(jwt(token));
+    
     const [nickname,setNickname]=useState('')
+    
     const onChange=(e)=>{    
         setNickname(e.target.value)
         console.log(nickname)
     }
     
-    const token=localStorage.getItem('login-token')
-
-    const submitHandler=(e)=>
+     const submitHandler=(e)=>
     {
         e.preventDefault()
         
@@ -48,14 +68,10 @@ const NicknameModal = (props) => {
     }    
 
     return (
-        <StyeldNicknameModal>
-       
             <form onSubmit={submitHandler}>
-                <input onChange={onChange} value={nickname}  type='text'/> 
-                <button type='submit'>닉네임 변경</button>
+                <StyleInput onChange={onChange} value={nickname} type='text'/> 
             </form>
-        </StyeldNicknameModal>
-    );
+      )
 };
 
-export default NicknameModal;
+export default EditNickname;

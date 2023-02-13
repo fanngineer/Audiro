@@ -70,27 +70,26 @@ const StyledLogoCircleRight = styled.div`
 
 const Logo=(props)=>{   
 
-    const token = localStorage.getItem('login-token');
-    console.log(jwt(token));
-    const nickname = jwt(token)['nickName']; 
-    console.log(nickname);
-    const userId = jwt(token)['userId']; 
-    console.log(userId);
+    // const token = localStorage.getItem('login-token');
+    // console.log(jwt(token));
+    // const nickname = jwt(token)['nickName']; 
+    // console.log(nickname);
+    // const userId = jwt(token)['userId']; 
+    // console.log(userId);
 
-    const [userImg, setuserImg] = useState();
-    useEffect(() => {
-        axios.get(`http://i8a402.p.ssafy.io/api/user/${userId}`, {headers: {Auth: `${token}`}})
-            .then((res) => {
-                 setuserImg(res.data.img);
-                })
-    }, []);
+    // const [userImg, setuserImg] = useState();
+    // useEffect(() => {
+    //     axios.get(`http://i8a402.p.ssafy.io/api/user/${userId}`, {headers: {Auth: `${token}`}})
+    //         .then((res) => {
+    //              setuserImg(res.data.img);
+    //             })
+    // }, []);
 
     return(
         <StyledLogoContainer>
             <StyledLogoCircleLeft></StyledLogoCircleLeft>
             <StyledLogo>어디:로</StyledLogo>
             <StyledSubLogo>나와 새로운 사람의 음악 공간</StyledSubLogo>
-            <LogoUserInfo type={props.type}/>
             <StyledLogoCircleRight></StyledLogoCircleRight>
         </StyledLogoContainer>
     );

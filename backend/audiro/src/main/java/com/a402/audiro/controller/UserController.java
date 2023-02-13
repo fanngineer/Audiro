@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/user")
-@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @Builder
+@CrossOrigin(value = {"*"}, exposedHeaders = {"Content-Disposition"})
 public class UserController {
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
@@ -37,7 +37,7 @@ public class UserController {
 
     //본인 닉네임 변경
     @PostMapping("/change-nickname")
-    public ResponseEntity<String> changeUserNickName(String newNickName){
+    public ResponseEntity<String> changeUserNickName(@RequestParam String newNickName){
         try{
             userService.updateUserNickName(newNickName);
             //responseHeader에 새로운 토큰을 날려보내야함.
