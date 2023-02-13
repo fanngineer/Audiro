@@ -37,6 +37,7 @@ function App() {
           <Route path='/messenger/:opponent' element={<Messages/>} />
           <Route path='/test/' element={<Test/>}/>
           <Route path='/userinfo' element={<UserInfo/>}/>
+          <Route path='/test' element={<Test/>}/>
       </Routes>
       </BrowserRouter>
     </div>

@@ -53,7 +53,7 @@ const MessageList=() => {
                 <StyledMessageListTitle>연희동 아자르님의 편지함 🎁 </StyledMessageListTitle>
                   <StyledMessageListWrapper>
                     {example.map(item => <Link to= {`/messenger/${item.nickname}`} element={Messages}><MessageIntro {...item}/></Link>)}
-                    {dataList.map(item=> <Link to={`/messenger/${item.nickname}`} element={Messages}> <MessageIntro {...item}/> </Link> )}
+                    {/* {dataList.map(item=> <Link to={`/messenger/${item.nickname}`} element={Messages}> <MessageIntro {...item}/> </Link> )} */}
                   </StyledMessageListWrapper>
             </StyledMessageListContainer>
         </div>

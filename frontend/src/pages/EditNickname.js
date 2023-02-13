@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from "axios";
 import Logo from "../components/Logo";
 import Nav from "../components/Nav";
-
+import {useNavigate} from 'react-router-dom'
 import jwt from 'jwt-decode';
 
 
@@ -24,7 +24,7 @@ const StyleInput = styled.input`
 `;
 
 const EditNickname = (props) =>{
-
+    const Navigate=useNavigate()
     const token = localStorage.getItem('login-token');
     console.log(jwt(token));
     
@@ -61,6 +61,8 @@ const EditNickname = (props) =>{
             localStorage.setItem('login-token', jwtToken);
             console.log('success');
             console.log(localStorage.getItem('login-token'))
+            Navigate('/home')
+            
         })
         .catch((e)=>{
             console.log(e);

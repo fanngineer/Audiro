@@ -54,9 +54,9 @@ const EditMsg = (props) =>{
             console.log(res);
     
             console.log((res['body']))
-            if (res['body']==success) {
-                Navigate('/home')
-            }
+         
+            Navigate('/home')
+            
             
             
         })

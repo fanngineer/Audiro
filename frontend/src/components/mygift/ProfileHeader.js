@@ -80,7 +80,7 @@ const ProfileHeader = (props) => {
   const outside = useRef();
   const {giftid}=useParams();
   console.log([deleteModalOpen, setDeleteModalOpen])
-  const [NicknameOpen, setNicknameOpen] = useState(false);
+  
 
   const token = localStorage.getItem('login-token');
   console.log(jwt(token));

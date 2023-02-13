@@ -4,9 +4,9 @@ import axios from "axios";
 import Logo from "../components/Logo";
 import Nav from "../components/Nav";
 import EditNickname from "./EditNickname";
-
+import EditMsg from "./EditMsg";
 import jwt from 'jwt-decode';
-
+import {useNavigate} from 'react-router-dom'
 const StyleUserInfoInput = styled.input`
     font-size: 16px;
     font-family: var(--font-nanumSquareL);
@@ -62,6 +62,7 @@ const StyleUserInfoText = styled.div`
 `;
 
 const UserInfo = () =>{
+    const Navigate=useNavigate()
 
     const token = localStorage.getItem('login-token');
     console.log(jwt(token));
@@ -70,24 +71,38 @@ const UserInfo = () =>{
     const userId = jwt(token)['userId']; 
     console.log(userId);
 
+
     const [name, setName] = useState();
     const [email, setEmail] = useState();
     const [profile, setProfile] = useState();
     const [isEdit, setEdit] = useState(false);
-
+    const [msg,setMsg]=useState('상태메세지 입니다.');
+    const [editingMsg,setEditingMsg]=useState(false);
+ 
     useEffect(() => {
-        axios.get(`http://i8a402.p.ssafy.io/api/user/${userId}`, {headers: {Auth: `${token}`}})
+        axios.get(`http://i8a402.p.ssafy.io/api/user/${userId}`, {headers: {Auth: `${token}`}},{withCredentials:true})
             .then((res) => {
                  console.log(res);
                  setName(res.data["name"]);
                  setEmail(res.data["email"]);
                  setProfile(res.data['img']);
+                 console.log('이미지까지 완료')
+                 setMsg(res.data['msg'])
             })
     }, []);
     
     const onClicked = () => {
       console.log("hahahahaha");
       setEdit(true);
+    };
+    const changeMsg=()=>{
+        setEditingMsg(true)
+    }
+    const logout=() =>{
+        localStorage.removeItem('login-token')
+        localStorage.removeItem('refresh-token')
+        Navigate('/login')
+        console.log('로그아웃완료')
     };
 
     return (
@@ -109,7 +124,15 @@ const UserInfo = () =>{
                     <StyleUserInfoTitle>닉네임</StyleUserInfoTitle>
                     <StyleUserInfoText onClick={onClicked}>{isEdit? <EditNickname/> : nickname}</StyleUserInfoText>
                 </StyledUserInfoWrapper>
+                <StyledUserInfoWrapper>
+                    <StyleUserInfoTitle>상태메세지</StyleUserInfoTitle>
+                    <StyleUserInfoText onClick={changeMsg}>{editingMsg? <EditMsg/> : msg}</StyleUserInfoText>
+                </StyledUserInfoWrapper>
+                <button onClick={logout}>로그아웃</button>
+                
+             
             </StyleUserInfoContainer>
+            
         </div>
       )
 };
