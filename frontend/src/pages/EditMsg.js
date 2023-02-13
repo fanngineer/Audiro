@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import axios from "axios";
 import Logo from "../components/Logo";
 import Nav from "../components/Nav";
-import {useNavigate} from 'react-router-dom'
-import jwt from 'jwt-decode';
 
+import jwt from 'jwt-decode';
+import {useNavigate} from 'react-router-dom'
 
 const StyleInput = styled.input`
     border-top: none;
@@ -23,8 +23,9 @@ const StyleInput = styled.input`
     }
 `;
 
-const EditNickname = (props) =>{
+const EditMsg = (props) =>{
     const Navigate=useNavigate()
+
     const token = localStorage.getItem('login-token');
     console.log(jwt(token));
     
@@ -39,29 +40,24 @@ const EditNickname = (props) =>{
     {
         e.preventDefault()
         
-        const data = {
-          "newNickName" : nickname
-        }
-        
-        axios.post('http://i8a402.p.ssafy.io:80/api/user/change-nickname', {}
+        axios.post('http://i8a402.p.ssafy.io:80/api/user/change-msg', {}
         ,
         {
             headers: {
               "Auth": token
             },
-            params: {newNickName: `${nickname}`}
+            params: {newMsg: `${nickname}`}
         })
         .then ((res)=>{
             console.log("결과 받기")
             console.log(token);
             console.log(res);
     
-            console.log((res['headers'])['refresh'])
-            const jwtToken=(res['headers'])['refresh'];
-            localStorage.setItem('login-token', jwtToken);
-            console.log('success');
-            console.log(localStorage.getItem('login-token'))
+            console.log((res['body']))
+         
             Navigate('/home')
+            
+            
             
         })
         .catch((e)=>{
@@ -76,4 +72,4 @@ const EditNickname = (props) =>{
       )
 };
 
-export default EditNickname;
+export default EditMsg;

@@ -8,7 +8,7 @@ import GiftList from "./pages/GiftList";
 import Login from './pages/Login'
 import Musicmate from "./pages/Musicmate";
 import Intro from './pages/Intro'
-
+import Test from "./pages/Test";
 import Others from "./pages/Others";
 import Messages from "./pages/Messages";
 
@@ -35,7 +35,9 @@ function App() {
 
           <Route path='/others/:nickname' element={<Others/>}/>
           <Route path='/messenger/:opponent' element={<Messages/>} />
+          <Route path='/test/' element={<Test/>}/>
           <Route path='/userinfo' element={<UserInfo/>}/>
+          <Route path='/test' element={<Test/>}/>
       </Routes>
       </BrowserRouter>
     </div>
