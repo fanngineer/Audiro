@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import {useNavigate} from 'react-router-dom'
 
 const StyledMMWrapper = styled.div`
     display: flex;
@@ -49,9 +49,13 @@ const StyledMMBlockBtn=styled.div`
 `;
 
 const MusicmateItem = (props) => {
+    const Navigate=useNavigate()
+    const moveTo = ()=>{
+        Navigate(`/others/${props.nickname}`)
+    }
     return (
             <StyledMMWrapper>
-                <StyledMMInfoWrapper>
+                <StyledMMInfoWrapper  onClick={moveTo}>
                     <StyledMMImg src={props.img}></StyledMMImg>
                     <StyledMMNinkname>{props.nickname}</StyledMMNinkname>
                 </StyledMMInfoWrapper>
