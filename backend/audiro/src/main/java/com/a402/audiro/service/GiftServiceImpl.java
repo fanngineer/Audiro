@@ -4,6 +4,9 @@ import com.a402.audiro.dto.GiftDTO;
 import com.a402.audiro.dto.GiftEmojiDTO;
 import com.a402.audiro.dto.GiftThumbnailDTO;
 import com.a402.audiro.entity.Gift;
+import com.a402.audiro.entity.User;
+import com.a402.audiro.exception.GiftNotExistException;
+import com.a402.audiro.exception.StateNotValidException;
 import com.a402.audiro.repository.GiftRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,31 +21,43 @@ import java.util.stream.Collectors;
 public class GiftServiceImpl implements GiftService{
 
     private final GiftRepository giftRepository;
+    private final UserService userService;
+    private final int OPEN = 1;
+    private final int CLOSE = 0;
 
     @Override
     public List<GiftThumbnailDTO> getGiftList(String nickname){
         List<Gift> gift;
         List<GiftThumbnailDTO> giftDTOList;
 
-        log.warn("gift before");
-        gift = giftRepository.findByNickname(nickname);
-        log.warn("gift log: " +gift.get(0).toString());
+        userService.isValidNickname(nickname);
 
-        gift = giftRepository.findByNickname(nickname);
-        giftDTOList = gift.stream()
-                .map(g -> GiftThumbnailDTO.builder()
-                        .id(g.getId())
-                        .giftImg(g.getGiftImg())
-                        .build())
-                .collect(Collectors.toList());
+        if(userService.isSameUser(nickname)){
+            log.info("유저 본인의 페이지입니다.");
+            gift = giftRepository.findByNickname(nickname);
+            giftDTOList = gift.stream()
+                    .map(g -> GiftThumbnailDTO.builder()
+                            .id(g.getId())
+                            .giftImg(g.getGiftImg())
+                            .build())
+                    .collect(Collectors.toList());
+        }else{
+            log.info("다른 유저의 피드입니다.");
+            gift = giftRepository.findByNicknameAndIsOpen(nickname);
+            giftDTOList = gift.stream()
+                    .map(g -> GiftThumbnailDTO.builder()
+                            .id(g.getId())
+                            .giftImg(g.getGiftImg())
+                            .build())
+                    .collect(Collectors.toList());
+        }
 
         return giftDTOList;
     }
 
     @Override
     public GiftDTO getGiftDetail(long giftId) {
-        Gift gift;
-        gift = giftRepository.findById(giftId);
+        Gift gift = getGift(giftId);
 
         return GiftDTO.builder()
                 .id(gift.getId())
@@ -67,7 +82,7 @@ public class GiftServiceImpl implements GiftService{
 
     @Override
     public void addFeedbackCnt(long giftId, int idx) {
-        Gift gift = giftRepository.findById(giftId);
+        Gift gift = getGift(giftId);
         switch (idx){
             case 1:
                 gift.addFeed1();
@@ -82,6 +97,35 @@ public class GiftServiceImpl implements GiftService{
                 gift.addFeed4();
                 break;
         }
+        giftRepository.save(gift);
+    }
+
+    @Override
+    public void addLike(long giftId) {
+        Gift gift = getGift(giftId);
+        gift.addLike();
+        giftRepository.save(gift);
+    }
+
+    @Override
+    public Gift getGift(long giftId) {
+        Gift gift = giftRepository.findById(giftId);
+
+        if(gift == null) throw new GiftNotExistException();
+        return gift;
+    }
+
+    private void isValidState(int state){
+        if(state != OPEN && state != CLOSE) throw new StateNotValidException();
+    }
+
+    @Override
+    public void changeOpenState(long giftId, int state) {
+        Gift gift = getGift(giftId);
+        isValidState(state);
+
+        gift.setOpen(state == OPEN);
+
         giftRepository.save(gift);
     }
 }

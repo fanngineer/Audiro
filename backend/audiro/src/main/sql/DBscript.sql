@@ -14,12 +14,13 @@ CREATE TABLE User(
                      PROFILE_MESSAGE VARCHAR(100) NULL,
                      PROFILE_IMG VARCHAR(200) NOT NULL DEFAULT 'https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927',
                      EMAIL VARCHAR(50),
-                     ROLE VARCHAR(20)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+                     ROLE VARCHAR(20),
+                     REFRESH_TOKEN VARCHAR(500)
+                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 UPDATE User SET role = "ROLE_ADMIN" WHERE email="fanngineer@gmail.com";
 INSERT INTO User (NAME, TOKEN, NICKNAME) VALUES ('sohee', 'abv12efw-- sedfwerg', 'sohee');
 INSERT INTO User (NAME, TOKEN, NICKNAME) VALUES ('gaok', 'abv12eqwqdfwerg', 'gaok');
-INSERT INTO User (NAME, TOKEN, NICKNAME) VALUES ('sungwhan', 'webv12ef1231', 'sungwhan');
+INSERT INTO User (NAME, TOKEN, NICKNAME, PROFILE_MESSAGE, EMAIL) VALUES ('sungwhan', 'webv12ef1231', 'sungwhan','나의 상태 메세지', 'asdklfjkdls@gmail.com');
 INSERT INTO User (NAME, TOKEN, NICKNAME) VALUES ('hosung', '12wrtsedddfwerg', 'hosung');
 
 
@@ -35,7 +36,9 @@ CREATE TABLE Song(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO Song (SONG_IMG, SONG_TITLE, SINGER, SONG_URL) VALUES('http://image_path.~~~', 'Ditto', 'New Jeans', 'https://yutube.Ditto~~~');
-
+INSERT INTO Song (SONG_IMG, SONG_TITLE, SINGER, SONG_URL) VALUES('http://image_path.~~~', 'Hype boy', 'New Jeans', 'https://yutube.Hype boy~~~');
+INSERT INTO Song (SONG_IMG, SONG_TITLE, SINGER, SONG_URL) VALUES('http://image_path.~~~', '기다린만큼 더', '검정치마', 'https://yutube.black~~~');
+INSERT INTO Song (SONG_IMG, SONG_TITLE, SINGER, SONG_URL) VALUES('http://image_path.~~~', 'Hilarious', 'Charlie Puth', 'https://yutube.Hilarious~~~');
 
 /* Spot */
 DROP TABLE IF EXISTS Spot;
@@ -47,8 +50,9 @@ CREATE TABLE Spot(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT Spot (SPOT_NAME, SPOT_ADDR) VALUES('역삼점', '서울시 강남구 역삼동~');
-
-
+INSERT SPOT (SPOT_NAME, SPOT_ADDR) VALUES('신촌점', '서울시 서대문구 신촌동~');
+INSERT SPOT (SPOT_NAME, SPOT_ADDR) VALUES('성수점', '서울시 성동구 성수동~');
+INSERT SPOT (SPOT_NAME, SPOT_ADDR) VALUES('신사점', '서울시 강남구 신사동~');
 /* Gift */
 DROP TABLE IF EXISTS Gift;
 
@@ -61,6 +65,7 @@ CREATE TABLE Gift(
     IS_OPEN BOOLEAN NOT NULL DEFAULT TRUE,
     GIFT_TAG VARCHAR(100) NULL,
     REG_TIME TIMESTAMP NOT NULL DEFAULT NOW(),
+    GIFT_LIKE INT NOT NULL DEFAULT 0,
     GIFT_FEEDBACK1 INT NOT NULL DEFAULT 0,
     GIFT_FEEDBACK2 INT NOT NULL DEFAULT 0,
     GIFT_FEEDBACK3 INT NOT NULL DEFAULT 0,
@@ -73,8 +78,10 @@ CREATE TABLE Gift(
 
 INSERT INTO Gift (GIFT_IMG, USER_ID, SPOT_ID, SONG_ID) VALUES ('https://www.naver.com/gift1', 2, 1, 1);
 INSERT INTO Gift (GIFT_IMG, USER_ID, SPOT_ID, SONG_ID, GIFT_TAG) VALUES ('https://www.naver.com/gift1', 2, 1, 1, "SUNNY");
-
-INSERT INTO Gift (GIFT_IMG, USER_ID, SPOT_ID, SONG_ID) VALUES ('https://cdn.discordapp.com/attachments/1056882470429138968/1068081563310506014/Notes_230126_170914.jpg', 12, 1, 1);
+INSERT INTO Gift (GIFT_IMG, USER_ID, SPOT_ID, SONG_ID) VALUES ('https://cdn.discordapp.com/attachments/1056882470429138968/1068081563310506014/Notes_230126_170914.jpg', 4, 1, 1);
+INSERT INTO Gift (GIFT_IMG, USER_ID, SPOT_ID, SONG_ID) VALUES ('https://cdn.discordapp.com/attachments/1056882470429138968/1068081563310506014/Notes_230126_170914.jpg', 3, 2, 2);
+INSERT INTO Gift (GIFT_IMG, USER_ID, SPOT_ID, SONG_ID) VALUES ('https://cdn.discordapp.com/attachments/1056882470429138968/1068081563310506014/Notes_230126_170914.jpg', 2, 2, 1);
+INSERT INTO Gift (GIFT_IMG, USER_ID, SPOT_ID, SONG_ID) VALUES ('https://cdn.discordapp.com/attachments/1056882470429138968/1068081563310506014/Notes_230126_170914.jpg', 1, 1, 1);
 
 /* Postcard */
 DROP TABLE IF EXISTS Postcard;
@@ -92,8 +99,8 @@ CREATE TABLE Postcard(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO Postcard (SEND_ID, SPOT_ID, SONG_ID, POSTCARD_IMG) VALUES (2, 1, 1, 'IMGE PATH ~~~');
-
-
+INSERT INTO Postcard (SEND_ID, SPOT_ID, SONG_ID, POSTCARD_IMG) VALUES (1, 4, 2, 'IMGE PATH ~~~');
+INSERT INTO Postcard (SEND_ID, SPOT_ID, SONG_ID, POSTCARD_IMG) VALUES (3, 2, 4, 'IMGE PATH ~~~');
 /* Musicmate */
 DROP TABLE IF EXISTS Musicmate;
 
@@ -106,7 +113,9 @@ CREATE TABLE Musicmate(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO Musicmate (USER_ID, MATE_ID) VALUES (2, 3);
-
+INSERT INTO Musicmate (USER_ID, MATE_ID) VALUES (2, 1);
+INSERT INTO Musicmate (USER_ID, MATE_ID) VALUES (4, 2);
+INSERT INTO Musicmate (USER_ID, MATE_ID) VALUES (1, 3);
 
 /* SongMeta */
 DROP TABLE IF EXISTS SongMeta;
@@ -121,3 +130,15 @@ CREATE TABLE SongMeta(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO SongMeta (SONG_ID, SPOT_ID) VALUES(1, 1);
+INSERT INTO SongMeta (SONG_ID, SPOT_ID) VALUES(1, 2);
+INSERT INTO SongMeta (SONG_ID, SPOT_ID) VALUES(2, 2);
+INSERT INTO SongMeta (SONG_ID, SPOT_ID) VALUES(2, 3);
+INSERT INTO SongMeta (SONG_ID, SPOT_ID) VALUES(1, 3);
+INSERT INTO SongMeta (SONG_ID, SPOT_ID) VALUES(2, 1);
+INSERT INTO SongMeta (SONG_ID, SPOT_ID) VALUES(4, 1);
+
+select * from user;
+select * from Gift;
+select * from song;
+select * from spot;
+select * from songmeta;

@@ -40,7 +40,6 @@ public class ManitoController {
     public ResponseEntity<?> addManito(@RequestParam(value = "giftImg") MultipartFile giftImg, @RequestParam(value ="manito", required = true) String manito){
         try{
             log.info("새로운 마니또가 들어왔습니다. 마니또 정보 : {}", manito);
-
             ObjectMapper objectMapper = new ObjectMapper();
             ManitoDTO manitoDTO = objectMapper.readValue(manito, ManitoDTO.class);
             log.info("새로운 마니또 DTO 맵핑 완료");

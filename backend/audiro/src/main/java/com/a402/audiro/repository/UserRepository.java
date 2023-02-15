@@ -12,6 +12,7 @@ public interface UserRepository extends Repository<User, Long> {
     User findByToken(String token);
     User findByEmail(String email);
     List<User> findAll();
+    String findByRefreshToken(String refreshToken);
     @Transactional
     void save(User user);
     void delete(User user);

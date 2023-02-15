@@ -22,7 +22,14 @@ const StyleInput = styled.input`
         border-bottom: 1px solid white;
     }
 `;
-
+const StyledSubmit = styled.button`
+    background-color:#6522F2;
+    border: none;
+    width:50px;
+    heigth:30px;
+    border-radius:5%;
+    
+`;
 const EditMsg = (props) =>{
     const Navigate=useNavigate()
 
@@ -67,7 +74,8 @@ const EditMsg = (props) =>{
 
     return (
             <form onSubmit={submitHandler}>
-                <StyleInput onChange={onChange} value={nickname} type='text'/> 
+                <StyleInput onChange={onChange} value={nickname} type='text' autoFocus/>
+                <StyledSubmit type="submit">변경</StyledSubmit> 
             </form>
       )
 };

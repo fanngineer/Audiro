@@ -9,7 +9,6 @@ spring:
             scope:
               - email
               - profile
-
           naver:
             client-secret: JJBfQDo08A
             client-id: xj6iYQrdmJ4LT_8N0kGu

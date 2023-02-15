@@ -1,9 +1,14 @@
 package com.a402.audiro.config.util.jwt;
 
+import com.a402.audiro.entity.User;
+import com.a402.audiro.repository.UserRepository;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +18,11 @@ import java.util.Date;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class JwtTokenService {
 
     private String secretKey = "token-secret-key should be long enough"; //jwt에 쓰일 secretkey
+    private final UserRepository userRepository;
 
     @PostConstruct
     protected void init() {
@@ -24,12 +31,13 @@ public class JwtTokenService {
 
     //토큰 생성 메서드
     public String generateAccessJwt(long userId, String nickName, String role) {
-        long tokenPeriod = 1000L * 60L * 100L; //인증토큰의 만료시간 100분
+        long tokenPeriod = 1000L * 60L * 1000L; //인증토큰의 만료시간 5분
         Claims claims = Jwts.claims();
         claims.put("role", role);
-        claims.put("userId",userId);;
+        claims.put("userId", userId);
         Date now = new Date();
         claims.put("nickName", nickName);
+        claims.put("type", "access");
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
@@ -37,19 +45,28 @@ public class JwtTokenService {
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
+
     public String generateRefreshJwt(long userId, String nickName, String role) {
         long refreshPeriod = 1000L * 60L * 60L * 24L * 30L * 3L; //Refresh토큰 만료 3주
         Claims claims = Jwts.claims();
-        claims.put("userId",userId);
+        claims.put("userId", userId);
         claims.put("role", role);
         Date now = new Date();
         claims.put("nickName", nickName);
-        return Jwts.builder()
+        claims.put("type", "refresh");
+
+        String refreshToken = Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + refreshPeriod))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
+        //DB에 리프레쉬 토큰 저장하기
+        User userTemp = userRepository.findById(userId);
+        userTemp.setRefreshToken(refreshToken);
+        userRepository.save(userTemp);
+        log.info("DB에 refresh 토큰 저장");
+        return refreshToken;
     }
 
 
@@ -57,35 +74,51 @@ public class JwtTokenService {
 
         return new JwtTokens(
                 generateAccessJwt(userId, nickName, role),
-                generateRefreshJwt(userId, nickName,role));
+                generateRefreshJwt(userId, nickName, role));
     }
 
     //토큰 유효성 검증 메서드
     public boolean verifyToken(String token) {
         try {
             log.info("토큰 검증 시작");
-            Jws<Claims> claims = Jwts.parser()
+            Jwts.parser()
                     .setSigningKey(secretKey)
-                    .parseClaimsJws(token);
-            return claims.getBody()
-                    .getExpiration()
-                    .after(new Date()); //시간 검증 메서드
-        } catch (Exception e) {
-            return false;
+                    .parseClaimsJws(token).getBody();
+            return true;
+        } catch (ExpiredJwtException e) {
+            log.warn("만료된 토큰 : {}", e.getMessage());
+            throw e;
+        } catch (JwtException e){
+            log.warn("잘못된 토큰 : {}", e.getMessage());
+            throw e;
         }
     }
 
     //토큰 refresh 메서드
-    public String refreshAccessToken(String refreshToken){
-        //리프레쉬 토큰에 담긴 사용자 정보
-        long id = getUserId(refreshToken);
-        String nickName = getUserNickName(refreshToken);
-        String role = getUserRole(refreshToken);
-        return generateAccessJwt(id, nickName, role);
+    public JwtTokens refreshAccessToken(String refreshToken) {
+        try{
+            //리프레쉬 토큰에 담긴 사용자 정보
+            long id = getUserId(refreshToken);
+            log.info("요청한 사용자 id : {}",id);
+            User user = userRepository.findById(id);
+            String refreshTokenInDB = user.getRefreshToken();
+            if(!refreshToken.equals(refreshTokenInDB)){
+                log.warn("RefreshToken이 일치하지 않습니다.");
+                return null;
+            }
+            String nickName = getUserNickName(refreshToken);
+            String role = getUserRole(refreshToken);
+            return generateToken(id, nickName, role);
+        }
+        catch (Exception e){
+            throw e;
+        }
     }
 
     public long getUserId(String token) {
-        return Integer.parseInt(Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("userId").toString());
+        return Integer.parseInt(
+                Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("userId")
+                        .toString());
     } //jwt토큰에서 userId 빼오는 메서드
 
     public String getUserNickName(String token) {
@@ -97,4 +130,9 @@ public class JwtTokenService {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("role")
                 .toString();
     } //jwt토큰에서 role 빼오는 메서드
+
+    public String getType(String token) {
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody()
+                .get("type").toString();
+    } //jwt토큰에서 type 빼오는 메서드
 }

@@ -1,0 +1,3 @@
+CREATE VIEW user_nickname AS
+SELECT USER_ID, NICKNAME
+FROM User;

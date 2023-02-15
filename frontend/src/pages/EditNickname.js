@@ -22,6 +22,14 @@ const StyleInput = styled.input`
         border-bottom: 1px solid white;
     }
 `;
+const StyledSubmit = styled.button`
+    background-color:#6522F2;
+    border: none;
+    width:50px;
+    heigth:30px;
+    border-radius:5px;
+    
+`;
 
 const EditNickname = (props) =>{
     const Navigate=useNavigate()
@@ -56,9 +64,15 @@ const EditNickname = (props) =>{
             console.log(token);
             console.log(res);
     
+            console.log((res['headers'])['auth'])
+            const jwtToken=(res['headers'])['auth'];
+            
             console.log((res['headers'])['refresh'])
-            const jwtToken=(res['headers'])['refresh'];
+            const jwtToken2=(res['headers'])['refresh'];
+            
             localStorage.setItem('login-token', jwtToken);
+            localStorage.setItem('refresh-token', jwtToken2);
+            
             console.log('success');
             console.log(localStorage.getItem('login-token'))
             Navigate('/home')
@@ -71,7 +85,8 @@ const EditNickname = (props) =>{
 
     return (
             <form onSubmit={submitHandler}>
-                <StyleInput onChange={onChange} value={nickname} type='text'/> 
+                <StyleInput onChange={onChange} value={nickname} type='text' autoFocus/> 
+                <StyledSubmit type="submit">변경</StyledSubmit> 
             </form>
       )
 };

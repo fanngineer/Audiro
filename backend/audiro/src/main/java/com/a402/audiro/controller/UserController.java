@@ -5,6 +5,7 @@ import com.a402.audiro.config.util.jwt.JwtTokenService;
 import com.a402.audiro.config.util.jwt.JwtTokens;
 import com.a402.audiro.dto.UserInfoDTO;
 import com.a402.audiro.dto.UserLoginDTO;
+import com.a402.audiro.exception.NickNameExistException;
 import com.a402.audiro.service.UserService;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,8 @@ public class UserController {
             JwtTokens newTokens = jwtTokenService.generateToken(id, newNickName, role);
             return ResponseEntity.ok().header("Auth",newTokens.getAccessToken()).header("Refresh",newTokens.getRefreshToken()).body(SUCCESS);
 
+        }catch (NickNameExistException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

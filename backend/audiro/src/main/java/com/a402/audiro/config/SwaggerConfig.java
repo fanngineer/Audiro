@@ -18,7 +18,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
     @Bean
     public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.OAS_30)
                 .useDefaultResponseMessages(false)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.a402.audiro.controller"))
@@ -32,11 +32,11 @@ public class SwaggerConfig {
 
     private ApiInfo metaData() {
         return new ApiInfoBuilder()
-                .title("GreenByMe REST API")
-                .description("Green by me, Green by earth(us)")
-                .version("0.4.0")
+                .title("SWAGGG")
+                .description("SwaggerConfig")
+                .version("3.0")
                 .termsOfServiceUrl("Terms of service")
-                .contact(new Contact("Tae Jeong, Da hun", "https://github.com/GreenByMe/GreenByMe_Server", "xowjd41@naver.com"))
+                .contact(new Contact("Seonghwan, Kim", "","fanngineer@gmail.com"))
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
                 .build();

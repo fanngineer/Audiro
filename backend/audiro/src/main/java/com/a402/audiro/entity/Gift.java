@@ -45,6 +45,9 @@ public class Gift {
     @Column(name = "reg_time")
     private LocalDateTime regTime;
 
+    @Column(name = "gift_like")
+    private int like;
+
     @Column(name = "gift_feedback1")
     private int feed1;
 
@@ -172,4 +175,6 @@ public class Gift {
     public void addFeed3(){ this.feed3++; }
 
     public void addFeed4(){ this.feed4++; }
+
+    public void addLike(){ this.like++; }
 }

@@ -23,4 +23,10 @@ public interface UserService {
 
     // 로그인중인 유저의 DB 정보 반환
     User getUser();
+
+    // 현재 유저와 닉네임이 일치하는지 확인
+    boolean isSameUser(String nickname);
+
+    void isValidNickname(String nickname);
+
 }

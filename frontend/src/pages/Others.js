@@ -6,10 +6,10 @@ import jwt from 'jwt-decode';
 import GiftDetailForOthers from '../components/mygift/Gift';
 import Logo from '../components/Logo'
 import Nav from '../components/Nav'
-
+import ProfileHeader from '../components/mygift/ProfileHeader';
 
 const OthersBackground=styled.div`
-    position: absolute;
+    
     height: 100vh;   
     width: 100vw;
     top: 20%; 
@@ -57,49 +57,65 @@ const Others = () => {
     const token = localStorage.getItem('login-token');
     const [dataList, setDataList] = useState([]);
     const [giftcnt, setGiftcnt] = useState(0);
+    const [mmcnt, setMMCnt] = useState(0);
+    const[targetId,setTargetId]=useState(null)
+
 
     const me = jwt(token)['nickName']; 
     console.log(me);
     const userId = jwt(token)['userId'];
     console.log(userId);
     let mates=[]
+    const [isMate,setIsMate]=useState(false)
     useEffect(() => {
         axios.get( 'http://i8a402.p.ssafy.io/api/gift', {params: {nickname: `${nickname}`}, headers: {Auth: `${token}`}} )
             .then((res) => {
                  console.log(res)
                  setDataList(res.data);
                  setGiftcnt(res.data.length);
+                 console.log('giftcnt done')
                 })
             .catch((err)=>{
                  console.log (err)
             })
-
+        },[]   );
+    useEffect(()=>{
         axios.get('http://i8a402.p.ssafy.io/api/musicmate',{params:{userId:`${userId}`},headers:{Auth:`${token}`}})
             .then ((res)=>{
-                console.log(res.data)
+    
+                
                 for (const dat of res.data){
-                    mates.push(dat['nickname'])
+                    console.log(dat)
+                    if(dat['nickname']==nickname){
+                        setIsMate(true)   
+                        break
+                    }
+                    else {
+                        continue
+                    }
                 }
                 console.log(mates)
                 console.log(mates.includes(nickname))
-                
             })
             .catch((err)=>{
                 console.log(err) 
             })
-    }   );
+        },[])
 
-    const beMate=()=>{
 
-    }
-    if (mates.includes(nickname)) {
+    const beMate=()=>{}
 
-        return(     
+
+    return(     
         <>
         <Logo/>
-        <Nav/>
+        <Nav/>{isMate &&
+        <>
+        <ProfileHeader nickname={nickname} giftcnt={giftcnt} mmcnt={mmcnt}/>
         <OthersBackground>
-            {nickname}님 페이지입니다<br/>
+            {nickname}님 페이지입니다
+            <br/>
+            
             <StyledMyGiftListWrapper>
                 <StyledMyGiftList>
                     {dataList?.map(item => (
@@ -107,26 +123,27 @@ const Others = () => {
                     ))}
                 </StyledMyGiftList>
             </StyledMyGiftListWrapper>
-        </OthersBackground> 
-        </>    
-      )
-    }
-    
-    else{
-        return (
-            <div>
-            <Logo/>
-            <Nav/>
-            <StyledNotMate>
-                {nickname}님 페이지입니다 <br/>
-                게시물을 보시려면 음악 메이트 신청하세요.
+        </OthersBackground>
+        </>
+         }
+        
+        {!isMate&&
+        <StyledNotMate>
+            {nickname}님 페이지입니다 <br/>
+            게시물을 보시려면 음악 메이트 신청하세요.
                 
-                <OthersMateButton onClick={beMate}>음악 메이트 신청하기</OthersMateButton>
-            </StyledNotMate>
+            <OthersMateButton onClick={beMate}>음악 메이트 신청하기</OthersMateButton>
+        </StyledNotMate>}
             
-            </div>
+        
+        </>    
+    )
+    
+    
+
+
             
-            )   
-    }
+             
+    
 }
 export default Others;

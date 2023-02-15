@@ -40,7 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // resources 모든 접근을 허용하는 설정을 해버리면
         // HttpSecurity 설정한 ADIM권한을 가진 사용자만 resources 접근가능한 설정을 무시해버린다.
         web.ignoring()
-                .antMatchers("/", "/loginForm", "/token/refresh");
+                .antMatchers("/swagger-ui/index.html","/swagger-ui.html","/", "/loginForm", "/token/refresh","/v3/api-docs",  "/configuration/ui",
+                        "/swagger-resources", "/configuration/security",
+                         "/webjars/**","/swagger/**");
     }
 
     @Override
@@ -53,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and()
 //                .authorizeRequests()
         http.authorizeRequests()
-                .antMatchers("/api/", "/api/loginForm", "/api/exception/**", "/common",
+                .antMatchers("/","/swagger-resources/**","/swagger-ui/*","/swagger-ui.html","/api/", "/api/loginForm", "/api/exception/**", "/common",
                         "/api/swagger-ui.html", "/api/token/refresh")
                 .permitAll() //메인페이지는 모든 사용자에게 가능하게
                 //.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")

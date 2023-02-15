@@ -21,6 +21,10 @@ const Nav=()=>{
         {
             title: '뮤직 메이트',
             link: '/musicmate'
+        },
+        {
+            title: '마이 페이지',
+            link: '/userinfo'
         }
     ];
 

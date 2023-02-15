@@ -61,6 +61,15 @@ const StyleUserInfoText = styled.div`
     color: white;
 `;
 
+const StyledLogout = styled.button`
+    background-color:#6522F2;
+    border: none;
+    width:100px;
+    heigth:60px;
+    border-radius:5px;
+    
+`;
+
 const UserInfo = () =>{
     const Navigate=useNavigate()
 
@@ -125,11 +134,12 @@ const UserInfo = () =>{
         console.log(formData.has('newImg'))
         console.log('done2')
         
-        axios.post('http://i8a402.p.ssafy.io/api/user/change-msg',
+        axios.post('http://i8a402.p.ssafy.io/api/user/change-img',
                     formData,
                     {headers: {
                           "Auth": token,
-                          "content-type": "multipart/form-data"}
+                          "content-type": "multipart/form-data"},
+  
                     }
         )
         .then((res)=>{
@@ -171,7 +181,7 @@ const UserInfo = () =>{
                     <StyleUserInfoTitle>상태메세지</StyleUserInfoTitle>
                     <StyleUserInfoText onClick={changeMsg}>{editingMsg? <EditMsg/> : msg}</StyleUserInfoText>
                 </StyledUserInfoWrapper>
-                <button color="black" onClick={logout}>로그아웃</button>
+                <StyledLogout background-color="black" onClick={logout}>로그아웃</StyledLogout>
                 
              
             </StyleUserInfoContainer>

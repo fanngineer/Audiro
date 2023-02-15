@@ -5,6 +5,7 @@ import com.a402.audiro.dto.GiftThumbnailDTO;
 import com.a402.audiro.service.GiftService;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @Builder
+@Slf4j
 public class GiftController {
 
     private final GiftService giftService;
@@ -25,6 +27,7 @@ public class GiftController {
             List<GiftThumbnailDTO> giftDTOList = giftService.getGiftList(nickname);
             return ResponseEntity.ok().body(giftDTOList);
         }catch (Exception e){
+            log.error(e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -35,6 +38,7 @@ public class GiftController {
             GiftDTO giftDTO = giftService.getGiftDetail(giftId);
             return ResponseEntity.ok().body(giftDTO);
         }catch(Exception e){
+            log.error(e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -45,6 +49,29 @@ public class GiftController {
             giftService.addFeedbackCnt(giftId, idx);
             return ResponseEntity.ok().body("success");
         }catch(Exception e){
+            log.error(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/like")
+    public ResponseEntity<?> addLike(@RequestParam long giftId){
+        try{
+            giftService.addLike(giftId);
+            return ResponseEntity.ok().body("좋아요를 1 증가시켰습니다.");
+        }catch(Exception e){
+            log.error(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/open")
+    public ResponseEntity<?> changeOpenState(@RequestParam long giftId, @RequestParam int state){
+        try{
+            giftService.changeOpenState(giftId, state);
+            return ResponseEntity.ok().body("success : 공개 여부 변경에 성공했습니다.");
+        }catch (Exception e){
+            log.error(e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -55,6 +82,7 @@ public class GiftController {
             giftService.deleteGift(giftId);
             return ResponseEntity.ok().body("Gift is deleted");
         }catch(Exception e){
+            log.error(e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
