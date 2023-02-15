@@ -39,7 +39,6 @@ public class Postcard {
     @JoinColumn(name = "spot_id")
     private Spot spot;
 
-
     private String password;
 
     @Column(name = "postcard_img")
