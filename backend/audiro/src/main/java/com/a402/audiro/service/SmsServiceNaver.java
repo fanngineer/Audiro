@@ -16,6 +16,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.retry.annotation.EnableRetry;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -34,6 +36,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Primary
 @Service
+@EnableRetry
 public class SmsServiceNaver implements SmsService{
 
     @Value("${naver-cloud-sms.accessKey}")
@@ -110,6 +113,7 @@ public class SmsServiceNaver implements SmsService{
     }
 
     @Override
+    @Retryable(maxAttempts = 2, value = NaverSmsException.class)
     public void sendMessage(PostcardDTO postcardDTO) {
         postcardDTO.init();
 
