@@ -16,6 +16,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
@@ -113,7 +114,7 @@ public class SmsServiceNaver implements SmsService{
     }
 
     @Override
-    @Retryable(maxAttempts = 2, value = NaverSmsException.class)
+    @Retryable(maxAttempts = 2, value = NaverSmsException.class, backoff = @Backoff(delay = 2000))
     public void sendMessage(PostcardDTO postcardDTO) {
         postcardDTO.init();
 
@@ -127,9 +128,12 @@ public class SmsServiceNaver implements SmsService{
             NaverSmsResponseDTO smsResponseDTO = sendSMS(smsMessageDTO);
             log.info("메세지 전송에 성공했습니다 : " + smsResponseDTO.getStatusName());
 
-        }catch(Exception e){
+        }catch(JsonProcessingException | RestClientException | URISyntaxException | InvalidKeyException | NoSuchAlgorithmException | UnsupportedEncodingException e){
             log.error(e.getMessage());
             throw new NaverSmsException(e.getMessage());
+        }catch(Exception e){
+            log.error(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
 
     }
