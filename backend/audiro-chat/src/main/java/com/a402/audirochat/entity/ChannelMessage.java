@@ -14,7 +14,7 @@ import lombok.*;
 public class ChannelMessage implements Serializable {
 
     private long userId;
-    private long receiverId;
+//    private long receiverId;
     private String userNickname;
     private ContentType contentType;
     private String content;
@@ -22,7 +22,7 @@ public class ChannelMessage implements Serializable {
 
     public ChannelMessage(long userId, String userNickname, ContentType type, String content){
         this.userId = userId;
-        this.receiverId = receiverId;
+//        this.receiverId = receiverId;
         this.userNickname = userNickname;
         this.contentType = type;
         this.content = content;

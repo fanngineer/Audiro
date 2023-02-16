@@ -3,6 +3,8 @@ import ChatMessage from './ChatMessage';
 import ChatMessageMe from './ChatMessageMe';
 import styled from 'styled-components';
 import { useState } from 'react';
+import jwt from 'jwt-decode';
+import {useParams} from "react-router-dom";
 
 const StyledChatContainer = styled.div`
     display: flex;
@@ -40,9 +42,21 @@ const StyledChatDateWrapper = styled.span`
 `;
 
 const ChatMessageList = (props) => {
+    console.log(props.messageList, "메세지 리스트!!!");
+
+    const token = localStorage.getItem('login-token');
+    console.log(jwt(token));
+    const userId = jwt(token)['userId'];
+    const userNickname = jwt(token)['nickName'];
+
+    console.log("test");
+    console.log(props);
+
     // 맵으로 돌면서 컴포넌트 생성
     // props로 정보 전달
     console.log(props.userId);
+
+    const {other_nickname} = useParams();
 
     const scrollRef = useRef();
     const scrollToBottom = () => {
@@ -54,11 +68,11 @@ const ChatMessageList = (props) => {
 
     return(
         <>            
-            <StyledChatRoomTitle>gaok님과의 편지</StyledChatRoomTitle>
+            <StyledChatRoomTitle>{other_nickname}님과의 편지</StyledChatRoomTitle>
             <StyledChatContainer ref={scrollRef}>
                 
                 {
-                    props.messageList && props.messageList.map((msg, index) => {
+                    props.messageList.length>0 && props.messageList?.map((msg, index) => {
                     console.log(props.messageList[0].sendTime.split(" ")[0])
                     return(
                         <> 
@@ -66,11 +80,11 @@ const ChatMessageList = (props) => {
                                 props.messageList[index-1].sendTime.split(" ")[0]!==props.messageList[index].sendTime.split(" ")[0] && 
                                 <StyledChatDateWrapper>{props.messageList[index].sendTime.split(" ")[0]}</StyledChatDateWrapper>
                             }
-                            {msg.userId == 1 ?
+                            {msg.userId == userId ?
                             <ChatMessageMe
                                 key={index}
-                                user_id={msg.userId}
-                                nickname={msg.userNickname}
+                                user_id={userId}
+                                nickname={userNickname}
                                 content_type={msg.contentType}
                                 content={msg.content}
                                 send_time={msg.sendTime}

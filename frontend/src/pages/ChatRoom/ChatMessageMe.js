@@ -60,6 +60,46 @@ const StyledChat2 = styled.div`
     justify-content: end;
 `;
 
+const StyledChatImgContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 20px 20px 20px;
+    border: 2px solid #F5336D;
+    margin-left: 30px;
+`;
+
+const StyledChatTitle = styled.div`
+    font-size: 16px;
+    font-family: var(--font-nanumSquareR);
+    color: white;
+    background-color: #F5336D;
+    padding: 10px;
+    border-radius: 0px 10px 10px 10px;
+`;
+
+const StyledChatImg = styled.div`
+    width: 150px;
+    height: 90px;
+    background-color: white;
+    margin-top: 20px;
+    margin-bottom: 20px;
+`;
+
+const StyledChatImgText = styled.div`
+    font-size: 16px;
+    font-family: var(--font-nanumSquareR);
+    color: white;
+    margin-top: 5px;
+    background-color: #F5336D;
+    padding: 7px;
+    border-radius: 10px 10px 10px 10px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+`;
+
 const ChatMessageMe = (props) => {
     console.log(props.receiver_id);
 
@@ -86,13 +126,20 @@ const ChatMessageMe = (props) => {
     const ImageMessage = (props) => {
         return(
             <StyledChatContainer>
-                <StyledChatProfile></StyledChatProfile>
+                {/* <StyledChatProfile src={userImg}></StyledChatProfile> */}
                 <StyledChatWrapper>
-                    <StyledChatNickname>{props.nickname}</StyledChatNickname>
-                    <img alt="이미지 메세지" src={props.content}/>
+                    {/* <StyledChatNickname>{props.nickname}</StyledChatNickname> */}
+                    
+                    <StyledChatImgContainer>
+                        {/* <img alt="이미지 메세지" src={props.content}/> */}
+                        <StyledChatTitle>내 엽서에 대한 답장이 도착했어요!</StyledChatTitle>
+                        <StyledChatImg></StyledChatImg>
+                        <StyledChatImgText>음악메이트 신청하기</StyledChatImgText>
+                    </StyledChatImgContainer>
+                    
                     {/* {props.user_id} */}
                     {/* {props.content_type} */}
-                    <StyledChatDate>{props.send_time}</StyledChatDate>
+                    <StyledChatDate>{props.send_time.split(" ")[1]+" "+props.send_time.split(" ")[2]}</StyledChatDate>
                 </StyledChatWrapper>
             </StyledChatContainer>
         )

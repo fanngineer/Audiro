@@ -7,6 +7,7 @@ import ChatRoom from './pages/ChatRoom/ChatRoom'
 
 import './App.css';
 import GiftList from "./pages/GiftList";
+import GiftListOther from "./pages/GiftListOther";
 import Login from './pages/Login'
 import Musicmate from "./pages/Musicmate";
 import Intro from './pages/Intro'
@@ -27,8 +28,9 @@ function App() {
           <Route exact path="/" element={<Intro/>}/>
           <Route path='/intro' element={<Intro/>}/>
           <Route path='/home' element={<Home/>}/>
-
+          
           <Route path="/gifts" element={<GiftList/>}/>
+          <Route path="/gifts/other/:nickname/:id" element={<GiftListOther/>}/>
           <Route path="/gifts/:giftid/:giftcnt/:mmcnt" element={<GiftDetail/>}/>
           
           <Route path="/messenger" element={<ChatList/>}/>
@@ -37,7 +39,7 @@ function App() {
 
           <Route path='/others/:nickname' element={<Others/>}/>
 
-          <Route path='/messenger/:channel_id' element={<ChatRoom/>} />
+          <Route path='/messenger/:channel_id/:other_nickname' element={<ChatRoom/>} />
           <Route path='/userinfo' element={<UserInfo/>}/>
 
       </Routes>

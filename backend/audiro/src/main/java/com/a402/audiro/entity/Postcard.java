@@ -23,7 +23,7 @@ import org.hibernate.annotations.DynamicInsert;
 public class Postcard {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "postcard_id")
     private long Id;
 

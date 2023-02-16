@@ -119,7 +119,7 @@ public class ManitoServiceImpl implements ManitoService{
     public void saveGiftImg(MultipartFile giftImg, ManitoDTO manitoDTO) throws IOException {
 
         try{
-            String UPLOADED_FOLDER = "C:\\Users\\SSAFY\\Desktop\\git-space2\\S08P12A402\\backend\\gift_images\\"+manitoDTO.getSpotId().toString();
+            String UPLOADED_FOLDER = "\\home\\ubuntu\\app\\S08P12A402\\backend\\gift_images\\"+manitoDTO.getSpotId().toString();
             log.info("마니또 이미지 저장 시작");
             //해당 경로에 manito 이미지 저장
             byte[] bytes = giftImg.getBytes();

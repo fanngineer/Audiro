@@ -10,7 +10,7 @@ import Gift from "../components/mygift/Gift";
 
 import axios from 'axios';
 import ProfileHeader from "../components/mygift/ProfileHeader";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 
 import jwt from 'jwt-decode';
 
@@ -66,6 +66,7 @@ const StyledMyGiftListWrapper=styled.div`
     display: flex;
     justify-content: center;
     align-items: center; 
+    overflow: auto;
 `;
 
 const StyledMyGiftList = styled.div`
@@ -82,21 +83,61 @@ const StyledMateModal = styled.div`
     position: absolute;
     top: 50%;
 `
-
-
+const StyledMMNone = styled.div`
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    font-family: var(--font-nanumSquareR);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+`;
 
 const GiftList = (props) =>{
     
     const token = localStorage.getItem('login-token');
     console.log(jwt(token));
-    const nickname = jwt(token)['nickName']; 
+    let nickname = jwt(token)['nickName']; 
     console.log(nickname);
-    const userId = jwt(token)['userId'];
+    let userId = jwt(token)['userId'];
     console.log(userId);
 
     const [dataList, setDataList] = useState([]);
     const [giftcnt, setGiftcnt] = useState(0);
     const [mmcnt, setMMCnt] = useState(0);
+
+    //const [realNickName, setNickname] = useState();
+    //setNickname(nickname);
+
+    //const {other_nickname} = useParams();
+    //const {id} = useParams();
+    //if(other_nickname!=nickname) {
+    //    if(nickname===undefined) {
+    //      nickname=other_nickname;
+    //      userId=id;
+    //      console.log("dala")
+    //    }
+    //    else if(other_nickname===undefined) {
+    //      console.log("other_nickname undefined")
+    //    }
+    //    else {
+    //      nickname=other_nickname;
+    //      userId=id;
+    //      console.log("dala")
+    //    }
+    //}
+    
+    //if(userId===undefined) userId=jwt(token)['userId'];
+    //console.log("userId")
+    //console.log(userId)
+    
+    //console.log("�г��� Ȯ��")
+    
+    //console.log(other_nickname);
+    //console.log(nickname);
+    //console.log(other_nickname===undefined);
+    //console.log(nickname===undefined);
 
     useEffect(() => {
         axios.get('http://i8a402.p.ssafy.io/api/gift', {params: {nickname: `${nickname}`}, headers: {Auth: `${token}`}})
@@ -125,8 +166,15 @@ const GiftList = (props) =>{
         <div>
             <Logo/>
             <Nav/>
-            <ProfileHeader nickname={nickname} giftcnt={giftcnt} mmcnt={mmcnt}/>
+            <ProfileHeader nickname={nickname} user_id={userId} giftcnt={giftcnt} mmcnt={mmcnt}/>
 
+            {
+            giftcnt==0? 
+                <>
+                    <StyledMMNone>⛔ 작성한 엽서가 없습니다 ⛔</StyledMMNone> 
+                    <StyledMMNone>부스에 방문하여 엽서를 만들어보세요</StyledMMNone>
+                </>
+                :
             <StyledMyGiftListWrapper>
                 <StyledMyGiftList>
                     {dataList?.map(item => (
@@ -134,6 +182,7 @@ const GiftList = (props) =>{
                     ))}
                 </StyledMyGiftList>
             </StyledMyGiftListWrapper>
+            }
             <StyledMateModal>{modalOpen && <Modal setOpenModal={setModalOpen} />}</StyledMateModal>
         </div>
       )

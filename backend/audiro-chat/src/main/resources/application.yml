@@ -15,3 +15,6 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher

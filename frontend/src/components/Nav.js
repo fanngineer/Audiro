@@ -2,8 +2,13 @@ import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import '../styles/Nav.css'
 import styled from 'styled-components';
+import jwt from 'jwt-decode';
 
 const Nav=()=>{
+
+    const token = localStorage.getItem('login-token');
+    console.log(jwt(token));
+    let nickname = jwt(token)['nickName']; 
 
     const items=[
         {

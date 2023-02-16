@@ -2,7 +2,9 @@ package com.a402.audiro.service;
 
 import com.a402.audiro.dto.UserInfoDTO;
 import com.a402.audiro.entity.User;
+import java.io.IOException;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
     //선택한 유저 정보 초회
@@ -15,7 +17,7 @@ public interface UserService {
     void updateUserMsg(String newMsg);
 
     //본인 닉네임 변경
-    void updateUserImg(String newImg);
+    void updateUserImg(MultipartFile newImg) throws IOException;
 
     //유저 목록 조회
     //쓸일 없는데 관리자 페이지나 뭐 할때 위해서 그냥 만듦
@@ -23,6 +25,8 @@ public interface UserService {
 
     // 로그인중인 유저의 DB 정보 반환
     User getUser();
+
+    User getUser(long userId);
 
     // 현재 유저와 닉네임이 일치하는지 확인
     boolean isSameUser(String nickname);

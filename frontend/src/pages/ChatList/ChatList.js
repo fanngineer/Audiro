@@ -6,9 +6,10 @@ import axios from "axios";
 import Logo from "../../components/Logo";
 import Nav from "../../components/Nav";
 import jwt from 'jwt-decode';
+import styled from 'styled-components';
 
 // 웹 소켓 연결 endpoint
-const BASE_URL = "ws://localhost:8082/ws-stomp";
+const BASE_URL = "ws://i8a402.p.ssafy.io:8082/ws-stomp";
 // 채널 리스트를 요청하는 rest api path
 const REQUEST_URL = "http://i8a402.p.ssafy.io/chat/channel/list";
 // 임의로 넣어둔 사용자 ID
@@ -16,12 +17,23 @@ const REQUEST_URL = "http://i8a402.p.ssafy.io/chat/channel/list";
 // 임의로 넣어둔 사용자 닉네임
 // const user_nickname = "pickapicka";
 
+const StyledMMNone = styled.div`
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    font-family: var(--font-nanumSquareR);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+`;
+
 const ChatList = () => {
 
     const token = localStorage.getItem('login-token');
     console.log(jwt(token));
     const user_id = jwt(token)['userId']; 
-    const user_nickname = jwt(token)['nickname']; 
+    const user_nickname = jwt(token)['nickName']; 
 
     // 채팅 룸 리스트를 저장하는 state
     const [channelList, setChannelList] = useState([]);
@@ -39,6 +51,7 @@ const ChatList = () => {
                     subscribe();
                 }
             },
+            connectHeaders : {Auth: `${token}`},
         });
         client.current.activate();
         // console.log("=====클라이언트", client)
@@ -55,7 +68,7 @@ const ChatList = () => {
                 // sub이 발생할 경우 useState이용해 목록을 업뎃 -> 렌더링,,이 다시 될 줄 알았는데 새로고침하면 안먹음
                 // const subChannel = async () => {
                     console.log("sub 발생!! : " + JSON.parse(data.body).content);
-                    const res = await axios.get(REQUEST_URL, {params: {userId: user_id}});
+                    const res = await axios.get(REQUEST_URL, {params: {userId: user_id}, headers: {Auth: `${token}`}});
                     //     .then((res)=>{
                     //     setChannelList(res.data);
                     // })
@@ -81,11 +94,11 @@ const ChatList = () => {
 
     // 마운트될 때 리스트를 가져옴
     useEffect(() => {
-        axios.get(REQUEST_URL, {params: {userId: user_id}})
+        axios.get(REQUEST_URL, {params: {userId: user_id},  headers: {Auth: `${token}`}})
         .then((res)=>{
             setChannelList(res.data);
         });
-        return () => {disconnect()}
+        // return () => {disconnect()}
     }, []);
 
     useEffect(() => {
@@ -98,7 +111,16 @@ const ChatList = () => {
         <div>
             <Logo/>
             <Nav/>
-            <ChatThumbnailList chatThumbnailList={channelList}/>
+            {
+                channelList.length==0 ? 
+                <>
+                    <StyledMMNone>⛔ 생성된 채팅방이 없습니다 ⛔</StyledMMNone> 
+                    <StyledMMNone>부스에 방문하여 새로운 사람과 채팅을 시작해보세요</StyledMMNone>
+                </>
+                :
+                <ChatThumbnailList chatThumbnailList={channelList}/>
+            }
+            
         </div>
     )
 }

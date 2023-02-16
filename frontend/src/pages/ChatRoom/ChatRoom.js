@@ -6,12 +6,11 @@ import axios from "axios";
 import Nav from "../../components/Nav";
 import styled from 'styled-components';
 import {FiSend} from "react-icons/fi";
-import { useCallback } from "react";
-import { useSelector } from 'react-redux';
 import jwt from 'jwt-decode';
+import Logo from "../../components/Logo";
 
 // 웹 소켓 연결할 endpoint
-const BASE_URL = "ws://localhost:8082/ws-stomp";
+const BASE_URL = "ws://i8a402.p.ssafy.io:8082/ws-stomp";
 
 // 지난 메세지 내역을 요청하기 위한 rest api path
 const REQUEST_URL = "http://i8a402.p.ssafy.io/chat/message";
@@ -45,8 +44,8 @@ const StyledInput = styled.input`
     font-family: var(--font-nanumSquareR);
     background-color: rgba(65, 22, 162, 0.5);
     padding: 10px;
-    height: 20px;
-    width: 260px;
+    height: 30px;
+    width: 100vw;
     :focus{
         outline: none !important;
         /* border-bottom: 1px solid white; */
@@ -64,7 +63,9 @@ const ChatRoom = () => {
     const token = localStorage.getItem('login-token');
     console.log(jwt(token));
     const user_id = jwt(token)['userId']; 
-    const user_nickname = jwt(token)['nickname']; 
+    const user_nickname = jwt(token)['nickName']; 
+
+    const {other_nickname} = useParams();
 
     // 메세지들을 관리하는 state
     const [messageList, setMessageList] = useState([]);
@@ -73,6 +74,7 @@ const ChatRoom = () => {
 
     // path에서 채팅방 아이디 받아옴
     const {channel_id} = useParams();
+    console.log("파람즈...", other_nickname, channel_id)
 
     // 소켓 연결 클라이언트 관리
     const client = useRef({});
@@ -87,6 +89,7 @@ const ChatRoom = () => {
                 // 연결에 성공하면 subscribe 함수를 콜함
                 subscribe();
             },
+            connectHeaders : {Auth: `${token}`},
         });
         // 웹 소켓 연결 활성화
         client.current.activate();
@@ -116,6 +119,7 @@ const ChatRoom = () => {
         // 채팅방 채널에 유저 아이디, 닉네임, 메세지 내용 전송 
         // contentType은 이미지 or 메세지인데 
         // 이미지 전송은 부스에서 엽서를 보낼 때에만 가능하니까 MESSAGE가 default
+        console.log(user_nickname);
         client.current.publish({
             destination: `/pub/channel/${channel_id}`,
             body: JSON.stringify({
@@ -149,8 +153,8 @@ const ChatRoom = () => {
     // 마운트될 때 웹 소켓 연결하고 메세지 목록 불러오기
     useEffect(() => {
         connect();
-
-        axios.get(REQUEST_URL, {params: {channelId: channel_id}})
+        console.log("유즈이펙트 안에서 채널 아이디: ", channel_id)
+        axios.get(REQUEST_URL, {params: {channelId: channel_id}, headers: {Auth: `${token}`}})
             .then((res)=>{
                 setMessageList(res.data);
                 console.log(res.data);
@@ -164,13 +168,14 @@ const ChatRoom = () => {
 
     return (
         <div>
+            <Logo/>
             <Nav/>
             {/* 메세지 리스트 컴포넌트 생성 */}
             <ChatMessageList messageList={messageList}/>
             <StyledInputWrapper>
                 <form onSubmit={(event) => handleSubmit(event, message)}>
                     <StyledInput type={'text'} name={'chatInput'} onChange={handleChange} value={message} placeholder="새로운 사람과의 대화를 시작합니다."/>
-                    <StyledBtn><FiSend type={'submit'}></FiSend></StyledBtn>
+                    {/* <StyledBtn><FiSend type={'submit'} onClick={(event) => handleSubmit(event, message)}></FiSend></StyledBtn> */}
                 </form>
             </StyledInputWrapper>
         </div>

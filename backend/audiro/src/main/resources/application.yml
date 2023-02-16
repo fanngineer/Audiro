@@ -40,3 +40,9 @@ notification:
     author-name: # attachment의 상단에 나오는 이름
     author-icon: # author-icon 왼쪽에 나올 아이콘의 url링크
     footer: # attachment에 하단에 나올 부분. default=현재 시간
+
+naver-cloud-sms:
+  accessKey: ZWsVKLx41vpVx0bviJVy
+  secretKey: DdTydsXlofqyDxdr56YFNhEPY9mp8pdOoh9VYO9F
+  serviceId: ncp:sms:kr:301300936505:audiro
+  senderPhone: 01092039218

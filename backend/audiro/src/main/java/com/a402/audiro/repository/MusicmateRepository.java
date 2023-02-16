@@ -20,4 +20,10 @@ public interface MusicmateRepository extends Repository<Musicmate, Long> {
             nativeQuery = true)
     List<Long> findByUserId(@Param("userId") Long userId);
 
+    @Query(value = "select * from Musicmate where user_id=:user_id and mate_id=:mate_id", nativeQuery = true)
+    Musicmate findByUserIdAndMateId(@Param("user_id") long userId, @Param("mate_id") long mateId);
+
+    void save(Musicmate musicmate);
+
+    void delete(Musicmate musicmate);
 }

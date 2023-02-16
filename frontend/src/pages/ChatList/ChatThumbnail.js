@@ -92,7 +92,7 @@ const ChatThumbnail = (props) => {
     return (
         // 해당 컴포넌트를 누르면 채팅방으로 이동함
         <StyledChatContainer>
-            <Link to={`/messenger/${props.channel_id}`}>
+            <Link to={`/messenger/${props.channel_id}/${props.nickname}`}>
                 <StyledChatListWrapper>
                 <StyledChatList>
                     <StyledChatProfile></StyledChatProfile>

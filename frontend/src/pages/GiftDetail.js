@@ -123,7 +123,7 @@ const GiftDetail = (props) => {
   const [feedback2, setFeedback2] = useState(0);
   const [feedback3, setFeedback3] = useState(0);
   const [feedback4, setFeedback4] = useState(0);
-
+  
   const {giftid} = useParams();
   const {giftcnt} = useParams();
   const {mmcnt} = useParams();
@@ -131,6 +131,18 @@ const GiftDetail = (props) => {
 
   const [dataDetail, setDataDetail] = useState({});
   const [dataEmoji, setDataEmoji] = useState({});
+  const [isPublic,setIsPublic]=useState(1)
+  const publicToggle=()=>{
+    axios.get('http://i8a402.p.ssafy.io/api/gift/open', {params: {giftId: giftid, state:Number(!isPublic)}, headers: {Auth: `${token}`}})
+    .then((res)=>{
+      console.log(res)
+      setIsPublic(Number(!isPublic))
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+    
+  }
   useEffect(() => {
       axios.get('http://i8a402.p.ssafy.io/api/gift/detail', {params: {giftId: giftid}, headers: {Auth: `${token}`}})
           .then((res) => {
@@ -144,7 +156,8 @@ const GiftDetail = (props) => {
               setFeedback3(res.data["emoji"].emo3)
               setFeedback4(res.data["emoji"].emo4)
           }
-      )       
+      )
+             
   }, []);
   
   const feedbackClicked = (number) => {
@@ -156,15 +169,23 @@ const GiftDetail = (props) => {
       )       
   }
 
+  const heartClicked = () => {
+    axios.get('http://i8a402.p.ssafy.io/api/gift/like', {params: {giftId: giftid}, headers: {Auth: `${token}`}})
+          .then((res) => {
+              console.log(res);
+          }
+      )       
+  }
+
   return (
     <div>
       <Logo/>
       <Nav/>
-      <ProfileHeader nickname={nickname} giftcnt={giftcnt} mmcnt={mmcnt} />
+    
       <StyledGiftDetailContainer>
         <StyledGiftDetailBtnWrapper>
-          <StyledDetailBtn>비공개</StyledDetailBtn>
-          <StyledDetailBtn onClick={()=> {setDeleteModalOpen(true)}}>삭제하기</StyledDetailBtn>
+          <StyledDetailBtn onClick={publicToggle} style={props.nickname==nickname? {display:'inline'}: {display:'none'}}>{isPublic? '비공개하기': '공개하기'}  </StyledDetailBtn>
+          <StyledDetailBtn onClick={()=> {setDeleteModalOpen(true)}} style={props.nickname==nickname? {display:'inline'}: {display:'none'}}>삭제하기</StyledDetailBtn>
         </StyledGiftDetailBtnWrapper>
         <StyledDetailImg><img src={dataDetail.giftImg} width="350"/></StyledDetailImg>
 
@@ -175,7 +196,7 @@ const GiftDetail = (props) => {
             <StyledSongDetail>-</StyledSongDetail>
             <StyledSongDetail>{dataDetail.song}</StyledSongDetail>
           </StyledSongWrapper>
-          <StyledHeartWrapper onClick={() => {setLike(like+1); }}>
+          <StyledHeartWrapper onClick={() => {setLike(like+1); heartClicked()}}>
             <StyledHeartDetail><FaHeart fill="red"/></StyledHeartDetail>
             <StyledHeartDetail>{like}</StyledHeartDetail>
           </StyledHeartWrapper>

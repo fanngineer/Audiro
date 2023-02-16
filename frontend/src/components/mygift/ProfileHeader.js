@@ -86,10 +86,12 @@ const ProfileHeader = (props) => {
   console.log(jwt(token));
   const userId = jwt(token)['userId']; 
   console.log(userId);
+  const nickname = jwt(token)['nickName']; 
+  console.log(nickname);
 
   const [userImg, setuserImg] = useState();
   useEffect(() => {
-    axios.get(`http://i8a402.p.ssafy.io/api/user/${userId}`, {headers: {Auth: `${token}`}})
+    axios.get(`http://i8a402.p.ssafy.io/api/user/${props.user_id}`, {headers: {Auth: `${token}`}})
       .then((res) => {
         setuserImg(res.data.img);
       })
@@ -100,7 +102,7 @@ const ProfileHeader = (props) => {
   return (
     <div>
       <StyledHeader>
-        <StyledMyGiftTitle><Link to="/userinfo">반가워요, {props.nickname}님 👋</Link></StyledMyGiftTitle>
+        <StyledMyGiftTitle><Link to="/userinfo">{props.nickname}님의 엽서 💌</Link></StyledMyGiftTitle>
         <StyledMyGiftHeaderWrapper>
           <StyledMyGiftProfile>
             <StyledProfileImg src={userImg}/>
@@ -112,12 +114,12 @@ const ProfileHeader = (props) => {
                 </div>
             </Link>
             <div>
-              <StyledMyGiftListNumber>1</StyledMyGiftListNumber>
+              <StyledMyGiftListNumber>1</StyledMyGiftListNumber> 
               <StyledMyGiftListTitle>방문한 지점</StyledMyGiftListTitle>
             </div>
             <Link to="/musicmate" style={{ textDecoration: 'none' }}>
               <StyledMyGiftListNumber>{props.mmcnt}</StyledMyGiftListNumber>
-              <StyledMyGiftListTitle>음악 메이트</StyledMyGiftListTitle>
+              <StyledMyGiftListTitle>뮤직메이트</StyledMyGiftListTitle>
             </Link>
         </StyledMyGiftHeaderWrapper>
       </StyledHeader>

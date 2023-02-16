@@ -38,8 +38,9 @@ public class ChannelController {
     }
 
     @GetMapping("/chat/message")
-    public ResponseEntity<?> getAllMessages(@RequestParam String channelId){
+    public ResponseEntity<?> getAllMessages(@RequestParam("channelId") String channelId){
         try{
+            log.info("컨트롤러 - 채널 ID : {}", channelId);
             List<MessageDTO> messageDTOList = chatService.getChannelMessages(channelId);
             log.info("메세지 내용 : " + messageDTOList.get(0).toString());
             return ResponseEntity.ok().body(messageDTOList);
@@ -64,7 +65,7 @@ public class ChannelController {
 //            log.info("메세지 저장");
             chatService.savePostcard(postcardImg, channelId, messageDTO);
             return ResponseEntity.ok().body("success");
-            
+
         }catch(IOException e) {
             log.error("사진 저장 실패");
             e.printStackTrace();
@@ -80,6 +81,7 @@ public class ChannelController {
     @SendTo("/sub/{channel}")
     public MessageDTO sendMessage(@DestinationVariable("channel") String channelId, MessageDTO messageDTO){
         log.info("메세지를 받았습니다. " + messageDTO.getContent());
+        log.info("컨트롤러의 유저 닉네임 : " + messageDTO.getUserNickname());
         messageDTO.setSendTime();
         log.info(messageDTO.toString());
         log.info("channelId: "+channelId);

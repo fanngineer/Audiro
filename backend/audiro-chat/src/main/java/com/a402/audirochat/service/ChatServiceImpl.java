@@ -37,7 +37,7 @@ public class ChatServiceImpl implements ChatService{
     private final UserRepository userRepository;
     private final ChannelRepository channelRepository;
     private final UserNicknameRepository userNicknameRepository;
-    private final String UPLOAD_DIR = "src/main/resources";
+    private final String UPLOAD_DIR = "/home/ubuntu/app/S08P12A402/backend/audiro-chat/src/main/resources/";
 
     private Optional<User> getUser(long userId){
         Optional<User> user = userRepository.findById(userId);
@@ -82,6 +82,8 @@ public class ChatServiceImpl implements ChatService{
 
     @Override
     public void saveMessage(String channelId, MessageDTO messageDTO) {
+        log.info("save message의 닉네임 : " + messageDTO.getUserNickname());
+    
         ChannelMessage message = ChannelMessage.builder()
                 .userId(messageDTO.getUserId())
                 .userNickname(messageDTO.getUserNickname())
@@ -95,7 +97,7 @@ public class ChatServiceImpl implements ChatService{
 
         channel.get().addChannelMessage(message);
         channelRepository.save(channel.get());
-        log.info("메세지를 저장했습니다. " + messageDTO.getContent());
+        log.info("메세지를 저장했습니다. " + message.toString());
     }
 
     @Override
@@ -135,9 +137,13 @@ public class ChatServiceImpl implements ChatService{
 
     @Override
     public List<MessageDTO> getChannelMessages(String channelId) {
-
         Optional<Channel> channels = getChannel(channelId);
-        return channels.get().getMessages().stream()
+
+        log.info("채널 메세지를 읽어옵니다. " + channelId);
+        log.info("채널의 메세지 길이 : " + channels.get().getMessages().size());
+        log.info("닉네임 : "+ channels.get().getMessages().get(0).getUserNickname());
+
+        List<MessageDTO> messageDTOList = channels.get().getMessages().stream()
                 .map(m -> MessageDTO.builder()
                         .userId(m.getUserId())
                         .userNickname(m.getUserNickname())
@@ -146,6 +152,10 @@ public class ChatServiceImpl implements ChatService{
                         .sendTime(m.getSendTime())
                         .build())
                 .collect(Collectors.toList());
+        
+        log.info("하하하 : " + messageDTOList.get(messageDTOList.size() - 1).toString());
+        
+        return messageDTOList;
     }
 
     @Transactional

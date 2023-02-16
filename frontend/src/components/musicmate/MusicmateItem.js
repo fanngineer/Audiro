@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import {useNavigate} from 'react-router-dom'
+
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const StyledMMWrapper = styled.div`
     display: flex;
@@ -49,17 +51,24 @@ const StyledMMBlockBtn=styled.div`
 `;
 
 const MusicmateItem = (props) => {
-    const Navigate=useNavigate()
-    const moveTo = ()=>{
-        Navigate(`/others/${props.nickname}`)
+    const token = localStorage.getItem('login-token');
+    const musicmateDelete = () => {
+        axios.delete("http://i8a402.p.ssafy.io/api/musicmate", {params: {mateId: props.id}, headers: {Auth: `${token}`}})
+        .then(response => {
+          console.log(response.data);
+          window.location.reload();
+        });
     }
+
     return (
             <StyledMMWrapper>
-                <StyledMMInfoWrapper  onClick={moveTo}>
-                    <StyledMMImg src={props.img}></StyledMMImg>
-                    <StyledMMNinkname>{props.nickname}</StyledMMNinkname>
-                </StyledMMInfoWrapper>
-                <StyledMMBlockBtn>차단하기</StyledMMBlockBtn>
+                <Link to={`/gifts/other/${props.nickname}/${props.id}`} style={{ textDecoration: 'none' }}>
+                    <StyledMMInfoWrapper>
+                        <StyledMMImg src={props.img}></StyledMMImg>
+                        <StyledMMNinkname>{props.nickname}</StyledMMNinkname>
+                    </StyledMMInfoWrapper>
+                </Link>
+                <StyledMMBlockBtn onClick={musicmateDelete}>삭제하기</StyledMMBlockBtn>
             </StyledMMWrapper>
     );
 };
