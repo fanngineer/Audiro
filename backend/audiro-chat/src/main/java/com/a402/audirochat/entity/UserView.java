@@ -8,13 +8,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user_nickname")
+@Table(name = "USER_VIEW")
 @Getter
-public class UserNickname {
+public class UserView {
 
     @Id
     @Column(name = "user_id")
     private long id;
 
     private String nickname;
+
+    @Column(name = "profile_img")
+    private String profileImg;
 }

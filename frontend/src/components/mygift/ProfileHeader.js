@@ -114,7 +114,7 @@ const ProfileHeader = (props) => {
                 </div>
             </Link>
             <div>
-              <StyledMyGiftListNumber>1</StyledMyGiftListNumber> 
+              <StyledMyGiftListNumber>{props.giftcnt==0?0:1}</StyledMyGiftListNumber> 
               <StyledMyGiftListTitle>방문한 지점</StyledMyGiftListTitle>
             </div>
             <Link to="/musicmate" style={{ textDecoration: 'none' }}>

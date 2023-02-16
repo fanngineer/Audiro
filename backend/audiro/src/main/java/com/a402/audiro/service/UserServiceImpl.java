@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
             long loginUserId = loginUser.getId();
             log.info("사용자 {}의 사진을 변경 시작", loginUserId);
             //이미지 저장 경로
-            String UPLOADED_FOLDER = "\\home\\ubuntu\\app\\S08P12A402\\backend\\profile_images\\";
+            String UPLOADED_FOLDER = "/home/ubuntu/app/S08P12A402/backend/profile_images/";
             //이미지 확장자 추출
             String imageName = newImg.getOriginalFilename();
             String type = imageName.substring(imageName.lastIndexOf(".") + 1);

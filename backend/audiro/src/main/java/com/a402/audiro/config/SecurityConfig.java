@@ -40,9 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // resources 모든 접근을 허용하는 설정을 해버리면
         // HttpSecurity 설정한 ADIM권한을 가진 사용자만 resources 접근가능한 설정을 무시해버린다.
         web.ignoring()
-                .antMatchers("/swagger-ui/index.html","/swagger-ui.html","/", "/loginForm", "/token/refresh","/v3/api-docs",  "/configuration/ui",
+                .antMatchers("/notifications/websocket","/swagger-ui/index.html","/swagger-ui.html","/", "/loginForm", "/token/refresh","/v3/api-docs",  "/configuration/ui",
                         "/swagger-resources", "/configuration/security",
-                         "/webjars/**","/swagger/**");
+                         "/webjars/**","/swagger/**","/api/postcard/detail");
     }
 
     @Override

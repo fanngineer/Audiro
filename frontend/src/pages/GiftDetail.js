@@ -155,6 +155,7 @@ const GiftDetail = (props) => {
               setFeedback2(res.data["emoji"].emo2)
               setFeedback3(res.data["emoji"].emo3)
               setFeedback4(res.data["emoji"].emo4)
+              setLike(res.data.giftLike)
           }
       )
              

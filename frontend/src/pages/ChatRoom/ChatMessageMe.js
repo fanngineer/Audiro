@@ -132,9 +132,9 @@ const ChatMessageMe = (props) => {
                     
                     <StyledChatImgContainer>
                         {/* <img alt="이미지 메세지" src={props.content}/> */}
-                        <StyledChatTitle>내 엽서에 대한 답장이 도착했어요!</StyledChatTitle>
+                        <StyledChatTitle>엽서에 대한 답장이 도착했어요!</StyledChatTitle>
                         <StyledChatImg></StyledChatImg>
-                        <StyledChatImgText>음악메이트 신청하기</StyledChatImgText>
+                        {/* <StyledChatImgText onClick={addMusicmate}>음악메이트 신청하기</StyledChatImgText> */}
                     </StyledChatImgContainer>
                     
                     {/* {props.user_id} */}

@@ -5,6 +5,7 @@ import com.a402.audirochat.dto.MessageDTO;
 import com.a402.audirochat.service.ChatService;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,6 +31,7 @@ public class ChannelController {
     public ResponseEntity<?> getChanneThumbnailList(@RequestParam long userId){
         try{
             List<ChannelThumbnailDTO> channelThumbnailList = chatService.getChannelThumbnail(userId);
+            log.info("채팅 컨트롤러 - 프로필 이미지 : " + channelThumbnailList.get(0).getProfileImg());
             return ResponseEntity.ok().body(channelThumbnailList);
         }catch(Exception e){
             log.error(e.getMessage());
@@ -81,6 +83,7 @@ public class ChannelController {
     @SendTo("/sub/{channel}")
     public MessageDTO sendMessage(@DestinationVariable("channel") String channelId, MessageDTO messageDTO){
         log.info("메세지를 받았습니다. " + messageDTO.getContent());
+        log.info("현재 시간 : " + LocalDateTime.now());
         log.info("컨트롤러의 유저 닉네임 : " + messageDTO.getUserNickname());
         messageDTO.setSendTime();
         log.info(messageDTO.toString());

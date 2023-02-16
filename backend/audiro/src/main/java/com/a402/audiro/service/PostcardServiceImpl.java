@@ -1,5 +1,6 @@
 package com.a402.audiro.service;
 
+import com.a402.audiro.dto.PasswordDTO;
 import com.a402.audiro.dto.PostcardDTO;
 import com.a402.audiro.dto.PostcardDetailDTO;
 import com.a402.audiro.entity.Postcard;
@@ -57,8 +58,8 @@ public class PostcardServiceImpl implements PostcardService{
         smsService.sendMessage(postcardDTO);
     }
 
-    private Postcard getPostcard(long postcardId){
-        Postcard postcard = postcardRepository.findById(postcardId);
+    private Postcard getPostcard(String passwd){
+        Postcard postcard = postcardRepository.findByPasswrod(passwd);
 
         if(postcard == null) throw new PostcardNotExistException();
 
@@ -66,8 +67,8 @@ public class PostcardServiceImpl implements PostcardService{
     }
 
     @Override
-    public PostcardDetailDTO getPostcardDetail(long postcardId) {
-        Postcard postcard = getPostcard(postcardId);
+    public PostcardDetailDTO getPostcardDetail(PasswordDTO passwordDTO) {
+        Postcard postcard = getPostcard(passwordDTO.getPasswd());
         log.info(postcard.toString());
 
         PostcardDetailDTO postcardDetailDTO = PostcardDetailDTO.builder()

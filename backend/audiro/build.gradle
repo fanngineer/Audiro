@@ -55,6 +55,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
 	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
 
+	// WebSocket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
 }
 tasks.named('test') {
 	useJUnitPlatform()

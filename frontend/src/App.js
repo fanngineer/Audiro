@@ -11,11 +11,9 @@ import GiftListOther from "./pages/GiftListOther";
 import Login from './pages/Login'
 import Musicmate from "./pages/Musicmate";
 import Intro from './pages/Intro'
-import Test from "./pages/Test";
-import Others from "./pages/Others";
-
 
 import UserInfo from "./pages/UserInfo";
+import Main from "./pages/Main"
 
 function App() {
 
@@ -27,7 +25,7 @@ function App() {
       <Routes>
           <Route exact path="/" element={<Intro/>}/>
           <Route path='/intro' element={<Intro/>}/>
-          <Route path='/home' element={<Home/>}/>
+          <Route path='/home' element={<Main/>}/>
           
           <Route path="/gifts" element={<GiftList/>}/>
           <Route path="/gifts/other/:nickname/:id" element={<GiftListOther/>}/>
@@ -37,10 +35,9 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/musicmate' element={<Musicmate/>}/> 
 
-          <Route path='/others/:nickname' element={<Others/>}/>
-
           <Route path='/messenger/:channel_id/:other_nickname' element={<ChatRoom/>} />
           <Route path='/userinfo' element={<UserInfo/>}/>
+          <Route path='/main' element={<Main/>}/>
 
       </Routes>
       </BrowserRouter>

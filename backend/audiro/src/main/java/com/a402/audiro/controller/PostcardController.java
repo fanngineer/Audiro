@@ -33,11 +33,11 @@ public class PostcardController {
     private final PostcardService postcardService;
     private final SmsService smsService;
 
-    @GetMapping
-    public ResponseEntity<?> getPostcardDetail(@RequestParam long postcardId){
+    @PostMapping("/detail")
+    public ResponseEntity<?> getPostcardDetail(@RequestBody @Valid PasswordDTO passwordDTO){
         try{
             log.info("postcard를 조회합니다.");
-            PostcardDetailDTO postcardDetailDTO = postcardService.getPostcardDetail(postcardId);
+            PostcardDetailDTO postcardDetailDTO = postcardService.getPostcardDetail(passwordDTO);
             return ResponseEntity.ok().body(postcardDetailDTO);
 
         }catch(Exception e){

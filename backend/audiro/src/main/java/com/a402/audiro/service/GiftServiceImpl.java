@@ -57,6 +57,8 @@ public class GiftServiceImpl implements GiftService{
 
     @Override
     public GiftDTO getGiftDetail(long giftId) {
+        log.info("기프트를 조회합니다.");
+
         Gift gift = getGift(giftId);
 
         return GiftDTO.builder()
@@ -66,6 +68,7 @@ public class GiftServiceImpl implements GiftService{
                 .singer(gift.getSong().getSinger())
                 .songUrl(gift.getSong().getSongUrl())
                 .regDate(gift.getRegTime())
+                .giftLike(gift.getLike())
                 .emoji(GiftEmojiDTO.builder()
                         .emo1(gift.getFeed1())
                         .emo2(gift.getFeed2())

@@ -2,10 +2,7 @@ package com.a402.audirochat.service;
 
 import com.a402.audirochat.dto.ChannelThumbnailDTO;
 import com.a402.audirochat.dto.MessageDTO;
-import com.a402.audirochat.entity.Channel;
-import com.a402.audirochat.entity.ChannelMessage;
-import com.a402.audirochat.entity.ContentType;
-import com.a402.audirochat.entity.User;
+import com.a402.audirochat.entity.*;
 import com.a402.audirochat.exception.ChannelNotExistException;
 import com.a402.audirochat.repository.ChannelRepository;
 import com.a402.audirochat.repository.UserNicknameRepository;
@@ -16,17 +13,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
+import com.a402.audirochat.repository.UserViewRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -36,7 +31,8 @@ public class ChatServiceImpl implements ChatService{
 
     private final UserRepository userRepository;
     private final ChannelRepository channelRepository;
-    private final UserNicknameRepository userNicknameRepository;
+//    private final UserNicknameRepository userNicknameRepository;
+    private final UserViewRepository userViewRepository;
     private final String UPLOAD_DIR = "/home/ubuntu/app/S08P12A402/backend/audiro-chat/src/main/resources/";
 
     private Optional<User> getUser(long userId){
@@ -121,16 +117,26 @@ public class ChatServiceImpl implements ChatService{
     @Override
     public List<ChannelThumbnailDTO> getChannelThumbnail(long userId) {
         Optional<User> user = getUser(userId);
-        List<ChannelThumbnailDTO> channelThumbnailDTOList = user.get().getChannels().values().stream()
-                .map(c -> ChannelThumbnailDTO.builder()
-                        .channelId(c.getChannel().getId())
-                        .nickname(c.getChannelName())
-                        .lastMessage(channelRepository.findById(c.getChannel().getId()).get().getLastMessage())
-                        .lastMessageTime(channelRepository.findById(c.getChannel().getId()).get().getLastMessageTime())
+//        List<ChannelThumbnailDTO> channelThumbnailDTOList = user.get().getChannels().values().stream()
+//                .map(c -> ChannelThumbnailDTO.builder()
+//                        .channelId(c.getChannel().getId())
+//                        .nickname(c.getChannelName())
+//                        .lastMessage(channelRepository.findById(c.getChannel().getId()).get().getLastMessage())
+//                        .lastMessageTime(channelRepository.findById(c.getChannel().getId()).get().getLastMessageTime())
+//                        .build())
+//                .collect(Collectors.toList());
+//
+//        channelThumbnailDTOList.sort(new TimeComparator());
+        Map<Long, ChannelInfo> channels = user.get().getChannels();
+        List<ChannelThumbnailDTO> channelThumbnailDTOList = channels.keySet().stream()
+                .map(k -> ChannelThumbnailDTO.builder()
+                        .channelId(channels.get(k).getChannel().getId())
+                        .nickname(channels.get(k).getChannelName())
+                        .profileImg(userViewRepository.findProfileImgById((long)k))
+                        .lastMessage(channelRepository.findById(channels.get(k).getChannel().getId()).get().getLastMessage())
+                        .lastMessageTime(channelRepository.findById(channels.get(k).getChannel().getId()).get().getLastMessageTime())
                         .build())
                 .collect(Collectors.toList());
-
-        channelThumbnailDTOList.sort(new TimeComparator());
 
         return channelThumbnailDTOList;
     }
@@ -175,7 +181,7 @@ public class ChatServiceImpl implements ChatService{
             channel = new Channel();
             log.info("채널 생성!!");
 
-            String nickname2 = userNicknameRepository.findUserNicknameById(userId2);
+            String nickname2 = userViewRepository.findUserNicknameById(userId2);
             log.info("상대방 닉네임 확인");
 
             user1.get().addChannels(userId2, channel, nickname2);

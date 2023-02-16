@@ -32,7 +32,7 @@ const StyledIntroSub = styled.div`
 `;
 
 const StyledIntroLogoWrapper = styled.div`
-position: relative;
+    position: relative;
 `;
 
 const StyledLogoCircleLeft = styled.div`

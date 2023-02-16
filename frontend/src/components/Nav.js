@@ -51,7 +51,6 @@ const Nav=()=>{
                     onClick={() => {
                         onClicked(item.title);
                     }}
-                    className={`${select === item.title ? 'select' : ''}`}
                 >
                     <Link to={item.link}>
                         {item.title}

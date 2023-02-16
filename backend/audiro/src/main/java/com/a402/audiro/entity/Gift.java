@@ -74,6 +74,7 @@ public class Gift {
                 ", isOpen=" + isOpen +
                 ", giftTag=" + giftTag +
                 ", regTime=" + regTime +
+                ", like=" + like +
                 ", feed1=" + feed1 +
                 ", feed2=" + feed2 +
                 ", feed3=" + feed3 +
@@ -177,4 +178,12 @@ public class Gift {
     public void addFeed4(){ this.feed4++; }
 
     public void addLike(){ this.like++; }
+
+    public int getLike() {
+        return like;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
+    }
 }

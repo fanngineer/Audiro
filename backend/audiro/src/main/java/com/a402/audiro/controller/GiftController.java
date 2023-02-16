@@ -3,6 +3,7 @@ package com.a402.audiro.controller;
 import com.a402.audiro.dto.GiftDTO;
 import com.a402.audiro.dto.GiftThumbnailDTO;
 import com.a402.audiro.service.GiftService;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,7 @@ public class GiftController {
 
     @GetMapping
     public ResponseEntity<?> getGiftList(@RequestParam String nickname){
+        log.info("현재 시간 : " + LocalDateTime.now());
         try{
             List<GiftThumbnailDTO> giftDTOList = giftService.getGiftList(nickname);
             return ResponseEntity.ok().body(giftDTOList);
@@ -34,6 +36,7 @@ public class GiftController {
 
     @GetMapping("/detail")
     public ResponseEntity<?> getGiftDetail(@RequestParam long giftId){
+        log.info("기프트 컨트롤러 호출");
         try{
             GiftDTO giftDTO = giftService.getGiftDetail(giftId);
             return ResponseEntity.ok().body(giftDTO);

@@ -13,6 +13,8 @@ const Home = () => {
         console.log(window.location.search);
         const jwtToken = params.get("auth");
         const refreshToken = params.get("refresh");
+        const spotId = params.get("spot_id");
+        console.log(spotId);
         
         if(jwtToken!=null){
           setToken(jwtToken);

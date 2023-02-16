@@ -18,5 +18,6 @@ public class GiftDTO {
     private String singer;
     private String songUrl;
     private LocalDateTime regDate;
+    private int giftLike;
     private GiftEmojiDTO emoji;
 }

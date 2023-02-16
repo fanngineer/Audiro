@@ -10,6 +10,7 @@ package com.a402.audiro.config.oauth;
 
 import com.a402.audiro.config.util.jwt.JwtTokenService;
 import com.a402.audiro.config.util.jwt.JwtTokens;
+import com.a402.audiro.controller.SpotLoginController;
 import com.a402.audiro.dto.UserOAuth2DTO;
 import com.a402.audiro.entity.User;
 import com.a402.audiro.repository.UserRepository;
@@ -45,6 +46,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler{
     private final JwtTokenService jwtTokenService;
     private final OAuth2DTOMapper OAuth2DTOMapper;
     private final ObjectMapper objectMapper;
+    private final SpotLoginController spotLoginController;
 
     @Autowired
     private UserRepository userRepository;
@@ -107,8 +109,10 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler{
 
         Optional<String> spotIdfromCookie = CookieUtil.getCookie(request, "spot_id")
                 .map(Cookie::getValue);
-        String spotId = spotIdfromCookie.orElse("지점명 찾지 못함");
+        String spotId = spotIdfromCookie.orElse("지점 찾지 못함");
         log.info("spotId : {}",spotId);
+
+        spotLoginController.sendMessageToSpot(spotId, jwtTokens.getAccessToken());
 
     }
 

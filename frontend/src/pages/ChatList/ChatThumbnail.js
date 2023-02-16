@@ -23,7 +23,7 @@ const StyledChatList = styled.div`
     display: flex;
 `;
 
-const StyledChatProfile = styled.div`
+const StyledChatProfile = styled.img`
     background-color: white;
     border-radius: 100%;
     width: 35px;
@@ -88,6 +88,8 @@ const ChatThumbnail = (props) => {
     }
 
     last_time=temp;
+    console.log("프로필 사진")
+    console.log(props.profile_img)
 
     return (
         // 해당 컴포넌트를 누르면 채팅방으로 이동함
@@ -95,14 +97,14 @@ const ChatThumbnail = (props) => {
             <Link to={`/messenger/${props.channel_id}/${props.nickname}`}>
                 <StyledChatListWrapper>
                 <StyledChatList>
-                    <StyledChatProfile></StyledChatProfile>
+                    <StyledChatProfile src={props.profile_img}></StyledChatProfile>
                     {/* {"채널명 : " + props.channel_id} */}
                     <StyledChatWrapper>
                         <StyledChatNickname>{props.nickname}</StyledChatNickname>
                         <StyledChatMsg>{props.last_message}</StyledChatMsg>
                     </StyledChatWrapper>
                 </StyledChatList>
-                <StyledChatDate>{last_time}</StyledChatDate>
+                <StyledChatDate>{str[1]+str[2]}</StyledChatDate>
                 </StyledChatListWrapper>
             </Link>
         </StyledChatContainer>
