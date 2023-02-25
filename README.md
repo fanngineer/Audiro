@@ -3,17 +3,32 @@
 음악 마니또를 컨셉으로 IoT 기기에서 음악 추천과 함께 엽서를 남길 수 있습니다. 기기의 다음 이용자가 엽서에 답장을 할 수 있으며 이는 웹으로 연동되어 채팅을 이어나갈 수 있습니다. 웹에서는 사용자가 추천한 음악과 작성했던 엽서를 확인할 수 있습니다.
 ## 📅 **프로젝트 진행 기간**
 2023.01.09 ~ 2023.02.17
+
 ## 📝 **주요 기능**
-- 기기의 QR을 통한 웹 로그인 연동  
-<img src="asset/kiosk_login.gif">
-- 엽서 작성 및 노래 추천  
+- 기기의 QR을 통한 웹 로그인 연동
+
+<img src="asset/kiosk_login.gif">  
+
+- 엽서 작성 및 노래 추천
+
 <img src="asset/kiosk_write.gif">  
-- 랜덤으로 보여지는 추천된 엽서를 선택해서 음악 감상  
-<img src="asset/kiosk_list.gif">  
-- 엽서에 답장 및 채팅 연동  
-<img src="asset/kiosk_reply.gif">
+
+- 랜덤으로 보여지는 추천된 엽서를 선택해서 음악 감상
+
+<img src="asset/kiosk_list.gif">
+
+- 엽서에 답장 및 채팅 연동
+
+<img src="asset/kiosk_reply.gif">  
+
 - 웹페이지 작성한 엽서 조회
+
+<img src="asset/chat.PNG" width = "100">  
+<img src="asset/my_page.PNG" width = "100">
+
 ## ✨ **기술 특이점**
+
+
 ## ⌨️ **주요 기술 스택**
 ### Back-end 
 - Java8
@@ -45,7 +60,7 @@
 - Git convention
 - Jira
 ## 😃 **팀원 역할**
-- 김성환(본인) - 기획, Back-end
+- 김성환(본인) - Back-end, 프로젝트 기획
 - 김호성 - Front-end
 - 신승호 - Embedded
 - 윤소희 - Back-end
