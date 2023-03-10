@@ -84,7 +84,7 @@ const StyledMateModal = styled.div`
 `
 
 
-const GiftListOther = (props) =>{
+const GiftListOther = (props,{match}) =>{
     
     const token = localStorage.getItem('login-token');
     console.log(jwt(token));

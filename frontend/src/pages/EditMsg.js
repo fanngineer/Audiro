@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import axios from "axios";
 import Logo from "../components/Logo";
 import Nav from "../components/Nav";
-import {useNavigate} from 'react-router-dom'
-import jwt from 'jwt-decode';
 
+import jwt from 'jwt-decode';
+import {useNavigate} from 'react-router-dom'
 
 const StyleInput = styled.input`
     border-top: none;
@@ -27,12 +27,12 @@ const StyledSubmit = styled.button`
     border: none;
     width:50px;
     heigth:30px;
-    border-radius:5px;
+    border-radius:5%;
     
 `;
-
-const EditNickname = (props) =>{
+const EditMsg = (props) =>{
     const Navigate=useNavigate()
+
     const token = localStorage.getItem('login-token');
     console.log(jwt(token));
     
@@ -47,35 +47,24 @@ const EditNickname = (props) =>{
     {
         e.preventDefault()
         
-        const data = {
-          "newNickName" : nickname
-        }
-        
-        axios.post('http://i8a402.p.ssafy.io:80/api/user/change-nickname', {}
+        axios.post('http://i8a402.p.ssafy.io:80/api/user/change-msg', {}
         ,
         {
             headers: {
               "Auth": token
             },
-            params: {newNickName: `${nickname}`}
+            params: {newMsg: `${nickname}`}
         })
         .then ((res)=>{
             console.log("결과 받기")
             console.log(token);
             console.log(res);
     
-            console.log((res['headers'])['auth'])
-            const jwtToken=(res['headers'])['auth'];
-            
-            console.log((res['headers'])['refresh'])
-            const jwtToken2=(res['headers'])['refresh'];
-            
-            localStorage.setItem('login-token', jwtToken);
-            localStorage.setItem('refresh-token', jwtToken2);
-            
-            console.log('success');
-            console.log(localStorage.getItem('login-token'))
+            console.log((res['body']))
+         
             Navigate('/home')
+            
+            
             
         })
         .catch((e)=>{
@@ -85,10 +74,10 @@ const EditNickname = (props) =>{
 
     return (
             <form onSubmit={submitHandler}>
-                <StyleInput onChange={onChange} value={nickname} type='text' autoFocus/> 
+                <StyleInput onChange={onChange} value={nickname} type='text' autoFocus/>
                 <StyledSubmit type="submit">변경</StyledSubmit> 
             </form>
       )
 };
 
-export default EditNickname;
+export default EditMsg;

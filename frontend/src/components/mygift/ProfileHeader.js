@@ -26,9 +26,13 @@ const StyledMyGiftTitle = styled.div`
     margin-bottom: 25px;
     margin-left: 10px;
     color: white;
+<<<<<<< HEAD
+    display: flex;
+=======
     >*{
       text-decoration: none;
     }
+>>>>>>> dev
 `;
 
 const StyledMyGiftHeaderWrapper = styled.div`
@@ -76,6 +80,7 @@ const ProfileHeader = (props) => {
   const outside = useRef();
   const {giftid}=useParams();
   console.log([deleteModalOpen, setDeleteModalOpen])
+  
 
   const token = localStorage.getItem('login-token');
   console.log(jwt(token));

@@ -142,9 +142,13 @@ const GiftList = (props) =>{
     useEffect(() => {
         axios.get('http://i8a402.p.ssafy.io/api/gift', {params: {nickname: `${nickname}`}, headers: {Auth: `${token}`}})
             .then((res) => {
+                 console.log(res)
                  setDataList(res.data);
                  setGiftcnt(res.data.length);
                 })
+            .catch((err)=>{
+                 console.log (err)
+            })
     }, []);
 
     useEffect(() => {

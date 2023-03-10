@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from "react";
-import Logo from "../components/Logo";
-import Nav from "../components/Nav";
+import Logo from "../Logo";
+import Nav from "../Nav";
 
 import {HiMusicNote} from "react-icons/hi";
 import {FaHeart} from "react-icons/fa"
@@ -9,9 +9,9 @@ import love from '../assets/images/love.png';
 import sad from '../assets/images/sad.png';
 import wow from '../assets/images/wow.png';
 import {useParams} from 'react-router-dom'
-import DeleteModal from "../components/modal/DeleteModal";
+import DeleteModal from "../modal/DeleteModal";
 import styled from 'styled-components';
-import ProfileHeader from "../components/mygift/ProfileHeader";
+import ProfileHeader from "./ProfileHeader";
 import axios from "axios";
 import jwt from 'jwt-decode';
 
@@ -23,7 +23,6 @@ const StyledGiftDetailBtnWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-end;  
-    margin-top: 30px;
 `;
 
 const StyledDetailBtn = styled.div`
@@ -41,8 +40,8 @@ const StyledDetailBtn = styled.div`
 
 const StyledDetailImg = styled.div`
     display: flex;
+    height: 200px;
     background-color: white;
-    justify-content: center;
 `;
 
 const StyledDetailBottomWrapper = styled.div`
@@ -113,7 +112,7 @@ const StyledReactionNumber = styled.div`
     text-align: center;
 `;
 
-const GiftDetail = (props) => {
+const GiftDetailForOthers = (props) => {
   const token = localStorage.getItem('login-token');
   console.log(jwt(token));
   const nickname = jwt(token)['nickName']; 
@@ -124,26 +123,13 @@ const GiftDetail = (props) => {
   const [feedback2, setFeedback2] = useState(0);
   const [feedback3, setFeedback3] = useState(0);
   const [feedback4, setFeedback4] = useState(0);
-  
+
   const {giftid} = useParams();
-  const {giftcnt} = useParams();
-  const {mmcnt} = useParams();
+
   // console.log([deleteModalOpen, setDeleteModalOpen])
 
   const [dataDetail, setDataDetail] = useState({});
   const [dataEmoji, setDataEmoji] = useState({});
-  const [isPublic,setIsPublic]=useState(1)
-  const publicToggle=()=>{
-    axios.get('http://i8a402.p.ssafy.io/api/gift/open', {params: {giftId: giftid, state:Number(!isPublic)}, headers: {Auth: `${token}`}})
-    .then((res)=>{
-      console.log(res)
-      setIsPublic(Number(!isPublic))
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
-    
-  }
   useEffect(() => {
       axios.get('http://i8a402.p.ssafy.io/api/gift/detail', {params: {giftId: giftid}, headers: {Auth: `${token}`}})
           .then((res) => {
@@ -156,10 +142,8 @@ const GiftDetail = (props) => {
               setFeedback2(res.data["emoji"].emo2)
               setFeedback3(res.data["emoji"].emo3)
               setFeedback4(res.data["emoji"].emo4)
-              setLike(res.data.giftLike)
           }
-      )
-             
+      )       
   }, []);
   
   const feedbackClicked = (number) => {
@@ -171,25 +155,14 @@ const GiftDetail = (props) => {
       )       
   }
 
-  const heartClicked = () => {
-    axios.get('http://i8a402.p.ssafy.io/api/gift/like', {params: {giftId: giftid}, headers: {Auth: `${token}`}})
-          .then((res) => {
-              console.log(res);
-          }
-      )       
-  }
-
   return (
     <div>
       <Logo/>
       <Nav/>
-    
+
       <StyledGiftDetailContainer>
         <StyledGiftDetailBtnWrapper>
-          <StyledDetailBtn onClick={publicToggle} style={props.nickname==nickname? {display:'inline'}: {display:'none'}}>{isPublic? '비공개하기': '공개하기'}  </StyledDetailBtn>
-          <StyledDetailBtn onClick={()=> {setDeleteModalOpen(true)}} style={props.nickname==nickname? {display:'inline'}: {display:'none'}}>삭제하기</StyledDetailBtn>
         </StyledGiftDetailBtnWrapper>
-
         <StyledDetailImg><img src={dataDetail.giftImg} width="350"/></StyledDetailImg>
 
         <StyledDetailBottomWrapper>
@@ -199,7 +172,7 @@ const GiftDetail = (props) => {
             <StyledSongDetail>-</StyledSongDetail>
             <StyledSongDetail>{dataDetail.song}</StyledSongDetail>
           </StyledSongWrapper>
-          <StyledHeartWrapper onClick={() => {setLike(like+1); heartClicked()}}>
+          <StyledHeartWrapper onClick={() => {setLike(like+1); }}>
             <StyledHeartDetail><FaHeart fill="red"/></StyledHeartDetail>
             <StyledHeartDetail>{like}</StyledHeartDetail>
           </StyledHeartWrapper>
@@ -225,11 +198,11 @@ const GiftDetail = (props) => {
         </StyledReactionWrapper>
         
       </StyledGiftDetailContainer>  
-      {deleteModalOpen&& <DeleteModal setOpenModal={setDeleteModalOpen}/>}
+
     </div>
   );
   
 }
 
 
-export default GiftDetail;
+export default GiftDetailForOthers;

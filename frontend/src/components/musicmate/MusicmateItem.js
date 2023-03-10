@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -50,7 +51,6 @@ const StyledMMBlockBtn=styled.div`
 `;
 
 const MusicmateItem = (props) => {
-    
     const token = localStorage.getItem('login-token');
     const musicmateDelete = () => {
         axios.delete("http://i8a402.p.ssafy.io/api/musicmate", {params: {mateId: props.id}, headers: {Auth: `${token}`}})

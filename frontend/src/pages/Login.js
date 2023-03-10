@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import Logo from "../components/Logo";
 import kakao from "../assets/images/kakao_logo.png"
@@ -66,7 +67,49 @@ const StyledLoginLogoNaver = styled.div`
 `;
 
 const Login = () =>{
+    function Kakaologin(){
+        fetch('http://i8a402.p.ssafy.io:8080/oauth2/authorization/kakao',{
+            method: 'GET',
+            credentials: "include",
+            
+        })
 
+        axios.get(
+            'http://i8a402.p.ssafy.io:8080/oauth2/authorization/kakao', 
+            { }, 
+            { withCredentials: true }
+        )
+        .then(response => { 
+            console.log(response); 
+            console.log(response.data); 
+        
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
+
+    function Naverlogin(){
+        fetch('http://i8a402.p.ssafy.io:8080/oauth2/authorization/naver',{
+            method: 'GET',
+            credentials: "include",
+            
+        })
+
+        axios.get(
+            'http://i8a402.p.ssafy.io:8080/oauth2/authorization/naver', 
+            { }, 
+            { withCredentials: true }
+        )
+        .then(response => { 
+            console.log(response); 
+            console.log(response.data); 
+        
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
     return (
         <div>
             <Logo type="login"/>
