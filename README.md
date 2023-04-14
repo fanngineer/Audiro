@@ -23,10 +23,8 @@
 
 - 웹페이지 작성한 엽서 조회
 
-<img src="asset/chat.PNG" width = "100">  
-<img src="asset/my_page.PNG" width = "100">
+<img src="asset/chat.PNG" width = "150">   <img src="asset/my_page.PNG" width = "150">
 
-## ✨ **기술 특이점**
 
 
 ## ⌨️ **주요 기술 스택**
@@ -52,11 +50,11 @@
 ## ✨ **ER Diagram**
 <img src="asset/ERD.jpg">
 
-## 🤔 **기획 산출물**
+## 🎁 **기획 산출물**
 - 기능 명세서
 - 와이어 프레임
 - API 명세서
-## ✨ **협업 과정**
+## 👬 **협업 과정**
 - Git convention
 - Jira
 ## 😃 **팀원 역할**
